@@ -1,0 +1,31 @@
+{
+  "name": "desafio_7",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@vaadin/router": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "dropzone": "*",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.15",
+    "parcel": "^2.3.1",
+    "pg": "8.7.1",
+    "pg-hstore": "2.3.4",
+    "sequelize": "6.13.0"
+  },
+  "scripts": {
+    "dev:be": "nodemon --watch './be-src/index.ts' --exec 'ts-node ./be-src/index.ts'",
+    "dev:fe": "parcel serve ./fe-src/index.html",
+    "sync": "ts-node ./be-src/sync.ts",
+    "build:be": "tsc ./be-src/index.ts",
+    "build:fe": "parcel build ./fe-src/index.html",
+    "build": "yarn build:fe && yarn build:be",
+    "start": "node ./dev.js"
+  },
+  "devDependencies": {
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1"
+  }
+}
