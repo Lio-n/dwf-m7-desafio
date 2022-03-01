@@ -11,7 +11,7 @@ class Home extends HTMLElement {
     this.render();
     this._listeners();
   }
-  async _listeners() {
+  _listeners() {
     const map: HTMLElement = this.shadow.querySelector("#mapNext");
     state.showAllLostPets(map);
 
@@ -25,18 +25,47 @@ class Home extends HTMLElement {
     const style = document.createElement("style");
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
     .home__cont-title {
-      text-align: center;
       font-size: 2rem;
       color: blue;
     }
     #mapNext {
-      height: 65vh;
+      height: 100vh;
     }
     .picture__pet {
       width: 3rem;
       height: 3rem;
       border-radius: 100%;
       background-repeat: round;
+    }
+    my-report {
+      display: none;
+    }
+    .pet__report {
+      cursor: pointer;
+    }
+    .mapboxgl-popup-content {
+      border-radius: 5px;
+    }
+    .mapboxgl-popup-close-button {
+      margin-right: .1rem;
+    }
+    .card__info {
+      font-size: .8rem;
+    }
+    .card__info p {
+      color: hsl(222deg 89% 45%);
+      margin-bottom: .5rem;
+    }
+    .card__info span {
+      font-weight: bold;
+      color: hsl(233deg 92% 15%);
+    }
+    .pet__report {
+      display: inline-block;
+      margin-top: .5rem;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
     }
     `;
 
@@ -56,14 +85,6 @@ class Home extends HTMLElement {
         <div class="form__mapbox">
             <div id="mapNext"></div>
         </div>
-
-        
-        <h1>Home</h1>
-        <h1>Home</h1>
-        <h1>Home</h1>
-        <h1>Home</h1>
-        <h1>Home</h1>
-        <h1>Home</h1>
       </div>
       
     </div>

@@ -60,19 +60,19 @@ class MisDatos extends HTMLElement {
       const passwordAlert: HTMLElement = this.shadow.querySelector(".alert");
 
       if (!arr.includes(false) && user_data.pswrd_1 == user_data.pswrd_2) {
-        console.log("Everything's Okay");
         passwordAlert.style.display = "none";
 
         state.setState({ ...state.getState(), full_name: user_data.full_name });
 
-        state.createUser(user_data.pswrd_1);
-        let isAuth = await state.authUser(user_data.pswrd_1);
+        await state.createUser(user_data.pswrd_1);
+
+        const isAuth: boolean = await state.authUser(user_data.pswrd_1);
+
         if (isAuth) {
           Router.go("/");
         }
       } else {
         passwordAlert.style.display = "initial";
-        console.log("F*ck U");
       }
     };
 

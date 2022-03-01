@@ -62,7 +62,7 @@ export const petMiddleware = async (req, res, next) => {
     pictureUrl: undefined,
     breed: undefined,
     color: undefined,
-    gender: undefined,
+    sex: undefined,
     date_last_seen: undefined,
     last_location_lat: undefined,
     last_location_lng: undefined,
@@ -70,11 +70,34 @@ export const petMiddleware = async (req, res, next) => {
 
   try {
     let isEqual: boolean = checkObjEqual(pet_layer, req.body);
-    console.log({ isEqual });
 
     if (isEqual) {
       // * Set the properties of one object to another.
       req._pet = { ...req.body };
+
+      return next();
+    }
+
+    throw "All inputs are required";
+  } catch (err) {
+    res.status(400).json({ err });
+  }
+};
+
+export const reportMiddleware = async (req, res, next) => {
+  const report_layer = {
+    full_name: undefined,
+    phone_number: undefined,
+    message: undefined,
+    pet_id: undefined,
+    published_by: undefined,
+  };
+
+  try {
+    let isEqual: boolean = checkObjEqual(report_layer, req.body);
+    if (isEqual) {
+      // * Set the properties of one object to another.
+      req._report = { ...req.body };
 
       return next();
     }

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.1",
     "@vaadin/router": "^1.7.4",
+    "algoliasearch": "^4.12.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "dropzone": "*",
@@ -25,7 +27,8 @@
     "start": "node ./dev.js"
   },
   "devDependencies": {
-    "os-browserify": "^0.3.0",
-    "path-browserify": "^1.0.1"
+    "buffer": "^6.0.3",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10"
   }
 }

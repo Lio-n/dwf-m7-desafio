@@ -2,17 +2,6 @@ import { setPetsOnMap } from "./lib/mapbox";
 
 const API_BASE_URL = "http://localhost:3000";
 let i = 0;
-type Pet = {
-  full_name: string;
-  pictureUrl: string;
-  breed: string;
-  color: string;
-  gender: string;
-  date_last_seen: string;
-  last_location_lat: number;
-  last_location_lng: number;
-  id?: number;
-};
 
 const state = {
   data: {
@@ -28,7 +17,7 @@ const state = {
       pictureUrl: undefined,
       breed: undefined,
       color: undefined,
-      gender: undefined,
+      sex: undefined,
       date_last_seen: undefined,
       last_location_lat: undefined,
       last_location_lng: undefined,
@@ -51,12 +40,26 @@ const state = {
     return this.data;
   },
 
-  showAllLostPets(map: HTMLElement) {
+  // # Send Report
+  async sendReport(report_data): Promise<boolean> {
+    return await (
+      await fetch(`${API_BASE_URL}/report/pet`, {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": " *",
+        },
+        body: JSON.stringify(report_data),
+      })
+    ).json();
+  },
+
+  showAllLostPets(map: HTMLElement): void {
     setPetsOnMap(map);
   },
 
-  async getAllPets() {
-    const res = await (
+  async getAllPets(): Promise<object> {
+    return await (
       await fetch(`${API_BASE_URL}/pet`, {
         method: "get",
         headers: {
@@ -65,9 +68,20 @@ const state = {
         },
       })
     ).json();
-
-    return res;
   },
+
+  async getPetsNearby(lat, lng): Promise<object> {
+    return await (
+      await fetch(`${API_BASE_URL}/pets-nearby?lat=${lat}&lng=${lng}`, {
+        method: "get",
+        headers: {
+          "content-type": "application/json",
+          "Access-Control-Allow-Origin": " *",
+        },
+      })
+    ).json();
+  },
+
   // # Check If User Exists : Return Boolean
   async checkUser(email: string): Promise<boolean> {
     this.setState({ ...this.getState(), email });
@@ -76,10 +90,10 @@ const state = {
   },
 
   // # Creater User : Return Boolean
-  createUser(password: string): void {
+  async createUser(password: string): Promise<void> {
     const { email, full_name } = this.getState();
 
-    fetch(`${API_BASE_URL}/auth`, {
+    await fetch(`${API_BASE_URL}/auth`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -104,14 +118,25 @@ const state = {
 
     if (res.isToken)
       this.setState({ ...this.getState(), TOKEN: res.isToken, full_name: res.full_name });
-
     return res.isToken;
+  },
+
+  // # User's Email : Return string
+  async getUserEmail(published_by: number): Promise<string> {
+    return await (
+      await fetch(`${API_BASE_URL}/user/${published_by}`, {
+        method: "get",
+        headers: {
+          "content-type": "application/json",
+        },
+      })
+    ).json();
   },
 
   // ! Below here you need a TOKEN
 
   // # Publish Pet
-  async publishPet(pet: Pet) {
+  async publishPet(pet): Promise<void> {
     const { TOKEN } = this.getState();
 
     await fetch(`${API_BASE_URL}/pet/publish`, {
@@ -126,10 +151,10 @@ const state = {
   },
 
   // # User's Pets
-  async getPets() {
+  async getPets(): Promise<object> {
     const { TOKEN } = this.getState();
 
-    const res = await (
+    return await (
       await fetch(`${API_BASE_URL}/pet/published-by`, {
         method: "get",
         headers: {
@@ -139,12 +164,10 @@ const state = {
         },
       })
     ).json();
-
-    return res;
   },
 
   // # Get One Pet
-  async getOnePet(petId: number) {
+  async getOnePet(petId: number): Promise<void> {
     const { TOKEN } = this.getState();
 
     const res = await (
@@ -162,7 +185,7 @@ const state = {
   },
 
   // # Update One Pet
-  async updatePet(pet: Pet) {
+  async updatePet(pet): Promise<void> {
     const { TOKEN } = this.getState();
 
     await fetch(`${API_BASE_URL}/pet/${pet.id}/update`, {
@@ -177,7 +200,7 @@ const state = {
   },
 
   // # Delete One Pet
-  async deletePet(petId: number) {
+  async deletePet(petId: number): Promise<void> {
     const { TOKEN } = this.getState();
 
     await fetch(`${API_BASE_URL}/pet/${petId}/delete`, {
@@ -189,6 +212,7 @@ const state = {
       },
     });
   },
+
   setState(newState) {
     this.data = newState;
     for (const cb of this.listeners) {

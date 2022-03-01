@@ -10,7 +10,19 @@ class Report extends HTMLElement {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
   }
-  connectedCallback() {
+  async connectedCallback() {
+    const pet_default = {
+      full_name: undefined,
+      pictureUrl: undefined,
+      breed: undefined,
+      color: undefined,
+      sex: undefined,
+      date_last_seen: undefined,
+      last_location_lat: undefined,
+      last_location_lng: undefined,
+    };
+
+    state.setState({ ...state.getState(), pet: pet_default });
     this.render();
     this.addListener();
   }
@@ -35,7 +47,7 @@ class Report extends HTMLElement {
       full_name: undefined,
       breed: undefined,
       color: undefined,
-      gender: undefined,
+      sex: undefined,
       date_last_seen: undefined,
     };
 
@@ -86,7 +98,7 @@ class Report extends HTMLElement {
       if (!arr.includes(false) && !!pet.last_location_lat) {
         radiusInput.forEach((item) => {
           const { value, checked } = item;
-          if (checked) pet_layer.gender = value;
+          if (checked) pet_layer.sex = value;
         });
 
         // # Set the values of 'pet_layer' to 'pet'.
@@ -204,15 +216,15 @@ class Report extends HTMLElement {
           <my-input  span="Color" name="color" placeholder="Gris, negro y blanco"></my-input>
 
           <div class="form__field field__radius">
-              <span class="field__span">Genero</span>
+              <span class="field__span">Sexo</span>
       
               <div>
-                  <input type="radio" id="male" name="gender" value="male" checked>
+                  <input type="radio" id="male" name="sex" value="male" checked>
                   <label for="male">Macho</label>
               </div>
               
               <div>
-                  <input type="radio" id="famale" name="gender" value="famale" checked>
+                  <input type="radio" id="famale" name="sex" value="famale" checked>
                   <label for="famale">Hembra</label>
               </div>
           </div>

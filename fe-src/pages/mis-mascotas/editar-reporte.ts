@@ -49,7 +49,7 @@ class Edit_Report extends HTMLElement {
       full_name: undefined,
       breed: undefined,
       color: undefined,
-      gender: undefined,
+      sex: undefined,
       date_last_seen: undefined,
     };
 
@@ -98,7 +98,7 @@ class Edit_Report extends HTMLElement {
       if (!arr.includes(false) && !!this.pet.last_location_lat) {
         radiusInput.forEach((item) => {
           const { value, checked } = item;
-          if (checked) pet_layer.gender = value;
+          if (checked) pet_layer.sex = value;
         });
 
         let pet = this.pet;
@@ -222,18 +222,18 @@ class Edit_Report extends HTMLElement {
           }" span="Color" name="color" placeholder="Gris, negro y blanco"></my-input>
 
           <div class="form__field field__radius">
-              <span class="field__span">Genero</span>
+              <span class="field__span">Sexo</span>
       
               <div>
-                  <input type="radio" id="male" name="gender" value="male" ${
-                    this.pet.gender == "male" ? "checked" : ""
+                  <input type="radio" id="male" name="sex" value="male" ${
+                    this.pet.sex == "male" ? "checked" : ""
                   }>
                   <label for="male">Macho</label>
               </div>
               
               <div>
-                  <input type="radio" id="famale" name="gender" value="famale" ${
-                    this.pet.gender == "female" ? "checked" : ""
+                  <input type="radio" id="famale" name="sex" value="famale" ${
+                    this.pet.sex == "female" ? "checked" : ""
                   }>
                   <label for="famale">Hembra</label>
               </div>

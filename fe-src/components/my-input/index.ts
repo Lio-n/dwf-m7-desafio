@@ -6,6 +6,8 @@ class Input extends HTMLElement {
   name: string;
   type: string;
   setValue;
+  height;
+  margin;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -15,6 +17,8 @@ class Input extends HTMLElement {
     this.place_holder = this.getAttribute("placeholder") || "";
     this.name = this.getAttribute("name") || "";
     this.setValue = this.getAttribute("set-value") || "";
+    this.height = this.getAttribute("height") || "2.8rem";
+    this.margin = this.getAttribute("margin") || "0 0 1.25rem 0";
   }
 
   static get observedAttributes() {
@@ -56,7 +60,7 @@ class Input extends HTMLElement {
     return `*{margin:0;padding:0;box-sizing: border-box;}
   .label {
     display: block;
-    margin-bottom: 1.25rem;
+    margin: ${this.margin};
   }
   .label__span {
     display: block;
@@ -66,7 +70,7 @@ class Input extends HTMLElement {
   .label__input {
     border: solid 1px lightgrey;
     width: 100%;
-    height: 2.8rem;
+    height: ${this.height};
     padding: 0 1rem;
     outline: none;
     border-radius: 5px;

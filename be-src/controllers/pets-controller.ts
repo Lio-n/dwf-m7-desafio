@@ -1,4 +1,5 @@
 // # Models
+import { algoliaSet, algoliaUpdate, algoliaDelete } from "../lib/algolia";
 import { Pet } from "../models";
 
 export const getAllPets = async (): Promise<object> => {
@@ -6,8 +7,11 @@ export const getAllPets = async (): Promise<object> => {
   return pets;
 };
 
-export const publishPet = async (petData: object, userId: number): Promise<boolean> => {
-  const pet = await Pet.create({ ...petData, state: "lost", published_by: userId });
+export const publishPet = async (pet_data: object, userId: number): Promise<boolean> => {
+  const pet = await Pet.create({ ...pet_data, state: "lost", published_by: userId });
+
+  algoliaSet(pet.get("id"), pet.get("last_location_lat"), pet.get("last_location_lat"));
+
   return pet ? true : false;
 };
 
@@ -35,10 +39,16 @@ export const updatePet = async (userId: number, petId: number, pet): Promise<boo
     petRes.update(pet);
   });
 
+  algoliaUpdate({
+    objectID: petId,
+    _geoloc: { lat: pet.last_location_lat, lng: pet.last_location_lng },
+  });
+
   return true;
 };
 
 export const deletePet = async (userId: number, petId: number): Promise<boolean> => {
   await Pet.destroy({ where: { published_by: userId, id: petId } });
+  algoliaDelete(petId);
   return true;
 };

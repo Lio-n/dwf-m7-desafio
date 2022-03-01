@@ -6,6 +6,7 @@ import {
   authMiddleware,
   tokenMiddleware,
   petMiddleware,
+  reportMiddleware,
 } from "./models/middleware";
 
 // # Controllers
@@ -14,6 +15,7 @@ import {
   createUser,
   updateProfile,
   getUserFullname,
+  getUserEmail,
 } from "./controllers/users-controller";
 import { authUser } from "./controllers/auth-controller";
 import {
@@ -24,6 +26,8 @@ import {
   getAllPets,
   deletePet,
 } from "./controllers/pets-controller";
+
+import { setReport } from "./controllers/reports-controller";
 
 import * as express from "express";
 import * as cors from "cors";
@@ -38,7 +42,6 @@ const port: number = 3000;
 // ## ヾ(●ω●)ノ ##
 
 // $ Verificate If User Exists.
-// ? Should : Use '/exists?user=${email}'
 app.get("/exists/:email", async (req, res) => {
   const { email } = req.params;
   try {
@@ -67,7 +70,7 @@ app.post("/auth", userMiddleware, async (req, res) => {
       res.status(201).json(userCreated);
     }
   } catch (err) {
-    res.status(409).json({ errBo: true, err: err });
+    res.status(409).json(err);
   }
 });
 
@@ -79,20 +82,17 @@ app.post("/auth/token", authMiddleware, async (req, res) => {
     const isToken: boolean = await authUser(req._user);
 
     if (isToken) {
-      const full_name: string = await getUserFullname(req._user.email);
+      const full_name = await getUserFullname(req._user.email);
       res.status(200).json({ isToken, full_name });
     } else {
-      res.status(200).json({ isToken });
+      res.status(200).json(isToken);
     }
   } catch (err) {
     res.status(401).json({ err });
   }
 });
 
-// ! Below here need a TOKEN
-
 // $ Get All Pets
-// * /pet
 app.get("/pet", async (req, res) => {
   try {
     const allPets: object = await getAllPets();
@@ -103,9 +103,22 @@ app.get("/pet", async (req, res) => {
   }
 });
 
+// $ Set Report.
+app.post("/report/pet", reportMiddleware, async (req, res) => {
+  try {
+    const owner_email = await getUserEmail(req._report.published_by);
+
+    const isReported = await setReport(req._report, owner_email);
+
+    res.status(200).json({ isReported });
+  } catch (err) {
+    res.status(401).json({ err });
+  }
+});
+
+// ! Below here need a TOKEN : Authorization: `bearer ${TOKEN}`
+
 // $ Publish Pet
-// * /pet/publish
-// Authorization: `bearer ${TOKEN}`
 app.post("/pet/publish", tokenMiddleware, petMiddleware, async (req, res) => {
   try {
     const isCreated: boolean = await publishPet(req._pet, req._userId);
@@ -117,8 +130,6 @@ app.post("/pet/publish", tokenMiddleware, petMiddleware, async (req, res) => {
 });
 
 // $ Get All the User's Pets
-// * /pet/published-by
-// Authorization: `bearer ${TOKEN}`
 app.get("/pet/published-by", tokenMiddleware, async (req, res) => {
   try {
     const userPets: object = await getUserPets(req._userId);
@@ -130,8 +141,6 @@ app.get("/pet/published-by", tokenMiddleware, async (req, res) => {
 });
 
 // $ Get One Pet
-// * /pet/{id}
-// Authorization: `bearer ${TOKEN}`
 app.get("/pet/:petId", tokenMiddleware, async (req, res) => {
   try {
     const onePet: object = await getOnePet(req._userId, req.params.petId);
@@ -143,8 +152,6 @@ app.get("/pet/:petId", tokenMiddleware, async (req, res) => {
 });
 
 // $ Update One Pet
-// * /pet/{id}/update
-// Authorization: `bearer ${TOKEN}`
 app.put("/pet/:petId/update", tokenMiddleware, petMiddleware, async (req, res) => {
   try {
     const isUpdated: boolean = await updatePet(req._userId, req.params.petId, req._pet);
@@ -156,8 +163,6 @@ app.put("/pet/:petId/update", tokenMiddleware, petMiddleware, async (req, res) =
 });
 
 // $ Delete One Pet
-// * /pet/{id}/delete
-// Authorization: `bearer ${TOKEN}`
 app.delete("/pet/:petId/delete", tokenMiddleware, async (req, res) => {
   try {
     const isDeleted: boolean = await deletePet(req._userId, req.params.petId);

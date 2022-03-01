@@ -5,6 +5,7 @@ import "./components/my-header/menu";
 import "./components/my-button";
 import "./components/my-input";
 import "./components/my-pet";
+import "./components/my-report";
 
 // ? PAGES
 import "./pages/home";

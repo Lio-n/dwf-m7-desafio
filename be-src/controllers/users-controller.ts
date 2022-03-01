@@ -29,7 +29,7 @@ export const createUser = async (userData): Promise<{ id?: any; isCreated: boole
 
   if (created) {
     // * Auth
-    Auth.findOrCreate({
+    await Auth.findOrCreate({
       where: { user_id: user.get("id") },
       defaults: {
         email,
@@ -59,7 +59,18 @@ export const updateProfile = async (userId, updateData: user): Promise<boolean> 
   return true;
 };
 
-export const getUserFullname = async (email: string): Promise<string> => {
-  const user = (await User.findOne({ where: { email } })) as any;
-  return user.full_name;
+export const getUserFullname = async (email: string): Promise<any> => {
+  const user = await User.findOne({
+    attributes: ["full_name"],
+    where: { email },
+  });
+
+  return user.get("full_name");
+};
+
+export const getUserEmail = async (userId: number): Promise<any> => {
+  const user_email = await User.findByPk(userId).then((resUser) => {
+    return resUser.get("email");
+  });
+  return user_email;
 };

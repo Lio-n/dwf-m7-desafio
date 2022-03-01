@@ -21,8 +21,7 @@ class Button extends HTMLElement {
         display: block;
         padding: .5rem;
         width: 100%;
-        min-width: 15rem;
-        height: 3rem;
+        min-width: 13rem;
         margin: ${this.margin};
         /* visual */
         background-color: ${this.backgroundColor};
