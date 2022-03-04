@@ -32,10 +32,13 @@ class Pet extends HTMLElement {
     .card {
         /* box-model */
         width: 20rem;
-        margin-bottom: 4rem;
+        margin-bottom: 3rem;
+        max-height: 24.5rem;
+        padding: .5rem;
         /* visual */
-        border: solid 1px lightgrey;
-        border-radius: 10px;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 0 10px #d5d1d1;
     }
     .pet {
         position: relative;
@@ -51,9 +54,8 @@ class Pet extends HTMLElement {
         z-index: 2;
         cursor: pointer;
         /* visual */
+        border-radius: 5px;
         opacity: 0;
-        border-radius: 10px 10px 0 0;
-        background-color: rgba(0, 0, 0, 0.1);
         transition: all .3s ease-in-out;
     }
     .pet:hover .pet__layer {
@@ -63,7 +65,7 @@ class Pet extends HTMLElement {
         filter: blur(1px);
     }
     .pet_full-name {
-        margin: 1rem 0 0 1rem;
+        margin: .5rem 0 0 .5rem;
     }
     .picture__update {
         width: 48px;
@@ -72,6 +74,7 @@ class Pet extends HTMLElement {
     .pet__picture {
         object-fit: cover;
         width: 100%;
+        border-radius: 5px;
         height: 20rem;
         display: block;
     }

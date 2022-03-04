@@ -89,11 +89,11 @@ class Report extends HTMLElement {
 
       !!pet.last_location_lat
         ? (mapboxAlert.style.display = "none")
-        : (mapboxAlert.style.display = "initial");
+        : (mapboxAlert.style.display = "inline-block");
 
       !!pet.pictureUrl
         ? (dropzoneAlert.style.display = "none")
-        : (dropzoneAlert.style.display = "initial");
+        : (dropzoneAlert.style.display = "inline-block");
 
       if (!arr.includes(false) && !!pet.last_location_lat) {
         radiusInput.forEach((item) => {
@@ -123,13 +123,17 @@ class Report extends HTMLElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 100%;
+        background-color: #eee;
+        padding: 0 1rem 2rem;
     }
 
     .form {
       margin: 0 auto;
       padding: 1rem;
       max-width: 40rem;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #d5d1d1;
     }
     .form__dropzone, .form__mapbox {
       margin-bottom: 1rem;
@@ -138,6 +142,7 @@ class Report extends HTMLElement {
     .form__dropzone {
       text-align: center;
       border: 1px solid lightgray;
+      border-radius: 5px;
     }
     .form__mapbox {
       display: flex;
@@ -146,21 +151,25 @@ class Report extends HTMLElement {
     }
     .map {
         min-height: 10rem;
-        height: 16rem;
+        height: 22rem;
+        border-radius: 5px;
+        position: relative;
+        z-index: 0;
     }
     span {
         display: block;
     }
     .dropzone__alert, .mapbox__alert, .mapbox__info {
       margin: 1rem 0;
-      color: #bbb;
+      color: #2d7a9c;
       font-style: italic;
       text-align: center;
     }
     .mapbox__alert, .dropzone__alert {
       display: none;
-      font-size: 1.5rem;
-      color: red;
+      font-size: 1rem;
+      color: #D82148;
+      font-weight: bold;
     }
     div .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
       margin: 10px 5px 0 5px;
@@ -169,11 +178,14 @@ class Report extends HTMLElement {
     .form__field {
       display: block;
       margin-bottom: 1.25rem;
+      letter-spacing: 1px;
     }
     .field__span {
       display: block;
       margin-bottom: 5px;
       font-size: 1rem;
+      font-weight: 500;
+      color: #292643;
     }
     .field__input {
       width: 100%;
@@ -194,6 +206,13 @@ class Report extends HTMLElement {
       margin: 0 0 .5rem 1rem;
       display: inline;
     }
+    .root__title {
+      margin: 2.5rem 0;
+      color: #292643;
+    }
+    .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right {
+      display: none;
+    }
     `;
 
     this.shadow.innerHTML = `
@@ -204,7 +223,7 @@ class Report extends HTMLElement {
 
     <my-header></my-header>
     <section class="root">
-      <h1>Reportar Mascota Perdida</h1>
+      <h1 class="root__title">Reportar Mascota Perdida</h1>
       
       <div class="card">
         <form class="form">
@@ -247,8 +266,8 @@ class Report extends HTMLElement {
             </div>
           </div>
       
-          <my-button class="button__confirm-report" margin="0 0 1.5rem 0" backgroundColor="#FF9DF5">Reportar como perdido</my-button>
-          <my-button class="button__cancel-report" margin="0 0 1.5rem 0" backgroundColor="#CDCDCD">Cancelar</my-button>
+          <my-button class="button__confirm-report" margin="0 0 1.5rem 0" color="#fff" backgroundColor="#2d7a9c">Reportar como perdido</my-button>
+          <my-button class="button__cancel-report" margin="0 0 1.5rem 0" color="#fff" backgroundColor="#8da9c4">Cancelar</my-button>
         </form>
       </div>
     </section>`;

@@ -36,18 +36,20 @@ export class Menu extends HTMLElement {
   render() {
     const style = document.createElement("style");
     style.innerHTML = `* {box-sizing: border-box;margin: 0;padding: 0;}
-    
     .home__menu-items {
       display: flex;
       font-size: 20px;
       list-style: none;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
     .home__item {
       border-radius: 5px;
       transition: all 0.5s ease-in-out;
+      width: max-content;
     }
     .home__item > a:hover {
-      color: hsl(233, 47%, 7%);
+      color: #094f6e;
     }
     .home__item:hover {
       background-color: #dadfea;
@@ -77,7 +79,6 @@ export class Menu extends HTMLElement {
       flex-direction: column;
       align-self: center;
       width: 2rem;
-      height: 2rem;
       cursor: pointer;
       transition: all 0.5s ease-in-out;
     }
@@ -123,11 +124,13 @@ export class Menu extends HTMLElement {
       height: 100%;
       flex-direction: column;
       font-size: 40px;
-      margin-top: 91.5px;
+      margin-top: 5rem;
       opacity: 0.9;
       top: 0;
       left: 0;
       display: flex;
+      justify-content: center;
+      align-items: center;
       visibility: hidden;
       transform: translateX(-414px);
       transition: all 0.5s ease-in-out;
@@ -135,10 +138,12 @@ export class Menu extends HTMLElement {
     .nav.center {
       transform: translateX(0px);
       visibility: inherit;
-      background-color: hsl(233, 47%, 10%);
+      background-color: hsla(198,85%,23%,.9);
     }
     .nav.center .nav__item {
       display: inherit;
+      margin-top: 1.5rem;
+      text-align: center;
     }
 
     @media (min-width: 768px) {
@@ -150,9 +155,10 @@ export class Menu extends HTMLElement {
       margin: 20px 0;
     }
     .nav > a {
-      text-shadow: 1px 1px 4px hsl(222deg 89% 45%);
-      color: #dadfea;
+      text-shadow: 1px 1px 4px #022534;
+      color: #fff;
       text-decoration: none;
+      cursor: pointer;
     }`;
 
     if (this.isAuth == "true") {
@@ -163,6 +169,7 @@ export class Menu extends HTMLElement {
                 <li class="home__item"><a href="/mis-datos">Mis datos</a></li>
                 <li class="home__item"><a href="/mis-mascotas">Mis mascotas reportadas</a></li>
                 <li class="home__item"><a href="/reportar">Reportar mascota</a></li>
+                <li class="home__item" style="margin-left: 20px;"><a href="/">Inicio</a></li>
             </div>
         </ul>
 
@@ -172,9 +179,10 @@ export class Menu extends HTMLElement {
 
         <!--Sub-Menu-->
         <div class="nav">
-            <a class="nav__item" >Mis datos</a>
-            <a class="nav__item" >Mis mascotas reportadas</a>
-            <a class="nav__item" >Reportar mascota</a>
+            <a class="nav__item" href="/">Inicio</a>
+            <a class="nav__item" href="/mis-datos">Mis datos</a>
+            <a class="nav__item" href="/mis-mascotas">Mis mascotas reportadas</a>
+            <a class="nav__item" href="/reportar">Reportar mascota</a>
         </div>`;
     } else {
       this.shadow.innerHTML = `
@@ -183,6 +191,7 @@ export class Menu extends HTMLElement {
             <div class="home__menu-items">
                 <li class="home__item"><a href="/login">Iniciar Sesion</a></li>
                 <li class="home__item"><a href="/login">Crear Cuenta</a></li>
+                <li class="home__item"><a href="/">Inicio</a></li>
             </div>
         </ul>
 
@@ -192,8 +201,9 @@ export class Menu extends HTMLElement {
 
         <!--Sub-Menu-->
         <div class="nav">
-            <a class="nav__item" >Iniciar Sesion</a>
-            <a class="nav__item" >Crear Cuenta</a>
+            <a class="nav__item" href="/">Inicio</a>
+            <a class="nav__item" href="/login">Iniciar Sesion</a>
+            <a class="nav__item" href="/login">Crear Cuenta</a>
         </div>`;
     }
 

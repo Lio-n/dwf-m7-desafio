@@ -19,7 +19,6 @@ class Button extends HTMLElement {
     button {
         /* box-model */
         display: block;
-        padding: .5rem;
         width: 100%;
         min-width: 13rem;
         margin: ${this.margin};
@@ -27,10 +26,19 @@ class Button extends HTMLElement {
         background-color: ${this.backgroundColor};
         color: ${this.color};
         border: none;
+        height: 45px;
         border-radius: 5px;
         cursor: pointer;
         /* typography */
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+        font-family: "Poppins";
+        font-weight: 600;
+        transition: all 0.4s ease-in-out;
+    }
+    button:hover {
+      background-color: #fff;
+      border: ${this.backgroundColor} 2px solid;
+      color: ${this.backgroundColor};
     }
     `;
 

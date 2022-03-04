@@ -88,6 +88,8 @@ class Picture extends HTMLElement {
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
     .root {
         min-height: 22rem;
+        position: relative;
+        z-index: 0;
     }
     .centerFlex, .picture__thumbnail, .previewTp__update, .pet__picture, .pet__layer, .root {
         /* box model */

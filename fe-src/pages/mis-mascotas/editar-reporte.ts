@@ -18,16 +18,18 @@ class Edit_Report extends HTMLElement {
     this._listeners();
   }
   _listeners() {
-    const reportFound = () => {
-      const btnFound: HTMLButtonElement = this.shadow.querySelector(".button__found");
-      btnFound.addEventListener("click", (e) => {
+    const changeStateOfPet = () => {
+      const btnChangeState: HTMLButtonElement = this.shadow.querySelector(".button__change-state");
+      btnChangeState.addEventListener("click", (e) => {
         e.preventDefault();
-        this.pet.state = "found";
+
+        this.pet.state == "lost" ? (this.pet.state = "found") : (this.pet.state = "lost");
+
         state.updatePet(this.pet);
         Router.go("/mis-mascotas");
       });
     };
-    reportFound();
+    changeStateOfPet();
 
     const deleteReport = () => {
       const deleteReport = this.shadow.querySelector(".delete__report");
@@ -39,6 +41,7 @@ class Edit_Report extends HTMLElement {
       });
     };
     deleteReport();
+
     const btnReport: HTMLButtonElement = this.shadow.querySelector(".button__confirm-report");
     const radiusInput: NodeListOf<HTMLInputElement> = this.shadow.querySelectorAll("input");
 
@@ -123,13 +126,17 @@ class Edit_Report extends HTMLElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 100%;
+        background-color: #eee;
+        padding: 0 1rem 2rem;
     }
 
     .form {
       margin: 0 auto;
       padding: 1rem;
       max-width: 40rem;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #d5d1d1;
     }
     .form__dropzone, .form__mapbox {
       margin-bottom: 1rem;
@@ -138,6 +145,7 @@ class Edit_Report extends HTMLElement {
     .form__dropzone {
       text-align: center;
       border: 1px solid lightgray;
+      border-radius: 5px;
     }
     .form__mapbox {
       display: flex;
@@ -145,22 +153,26 @@ class Edit_Report extends HTMLElement {
       flex-direction: column;
     }
     .map {
-        min-height: 10rem;
-        height: 16rem;
+      min-height: 10rem;
+      height: 22rem;
+      border-radius: 5px;
+      position: relative;
+      z-index: 0;
     }
     span {
         display: block;
     }
     .dropzone__alert, .mapbox__alert, .mapbox__info {
       margin: 1rem 0;
-      color: #bbb;
+      color: #2d7a9c;
       font-style: italic;
       text-align: center;
     }
     .mapbox__alert, .dropzone__alert {
       display: none;
-      font-size: 1.5rem;
-      color: red;
+      font-size: 1rem;
+      color: #D82148;
+      font-weight: bold;
     }
     div .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
       margin: 10px 5px 0 5px;
@@ -169,11 +181,14 @@ class Edit_Report extends HTMLElement {
     .form__field {
       display: block;
       margin-bottom: 1.25rem;
+      letter-spacing: 1px;
     }
     .field__span {
       display: block;
       margin-bottom: 5px;
       font-size: 1rem;
+      font-weight: 500;
+      color: #292643;
     }
     .field__input {
       width: 100%;
@@ -194,6 +209,25 @@ class Edit_Report extends HTMLElement {
       margin: 0 0 .5rem 1rem;
       display: inline;
     }
+    .root__title {
+      margin: 2.5rem 0;
+      color: #292643;
+    }
+    .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right {
+      display: none;
+    }
+    .delete {
+      display: block;
+      text-align: center;
+    }
+    .delete__report {
+      color: #D82148;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .delete__report:hover {
+      text-decoration: underline;
+    }
     `;
 
     this.shadow.innerHTML = `
@@ -204,7 +238,7 @@ class Edit_Report extends HTMLElement {
 
     <my-header></my-header>
     <section class="root">
-      <h1>Editar Reporte</h1>
+      <h1 class="root__title">Editar Reporte</h1>
       
       <div class="card">
         <form class="form">
@@ -259,10 +293,15 @@ class Edit_Report extends HTMLElement {
             </div>
           </div>
       
-          <my-button class="button__confirm-report" margin="0 0 1.5rem 0" backgroundColor="#FF9DF5">Guardar</my-button>
-          <my-button class="button__found" margin="0 0 1.5rem 0" backgroundColor="#97EA9F">Reportar como encontrado</my-button>
+          <my-button class="button__confirm-report" margin="0 0 1.5rem 0" color="#fff" backgroundColor="#00C897">Guardar</my-button>
+          <my-button class="button__change-state" margin="0 0 1.5rem 0" backgroundColor="#ffd700" color="#fff">Reportar como ${
+            this.pet.state == "lost" ? "encontrado" : "perdido"
+          }</my-button>
 
-          <a class="delete__report">Borrar reporte</a>
+          <div class="delete">
+            <a class="delete__report">Borrar reporte</a>
+          </div>
+
 
         </form>
       </div>

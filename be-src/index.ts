@@ -1,5 +1,6 @@
 import "dotenv/config";
 
+import * as path from "path";
 // # Middleware
 import {
   userMiddleware,
@@ -25,6 +26,7 @@ import {
   updatePet,
   getAllPets,
   deletePet,
+  getPetsNearby,
 } from "./controllers/pets-controller";
 
 import { setReport } from "./controllers/reports-controller";
@@ -34,8 +36,9 @@ import * as cors from "cors";
 
 const app = express();
 
-app.use(express.json({ limit: "75mb" }));
 app.use(cors());
+app.use(express.json({ limit: "75mb" }));
+app.use(express.static("dist"));
 
 const port: number = 3000;
 
@@ -88,7 +91,7 @@ app.post("/auth/token", authMiddleware, async (req, res) => {
       res.status(200).json(isToken);
     }
   } catch (err) {
-    res.status(401).json({ err });
+    res.status(401).json(err);
   }
 });
 
@@ -99,7 +102,7 @@ app.get("/pet", async (req, res) => {
 
     res.status(201).json(allPets);
   } catch (err) {
-    res.status(401).json({ err });
+    res.status(400).json(err);
   }
 });
 
@@ -110,9 +113,26 @@ app.post("/report/pet", reportMiddleware, async (req, res) => {
 
     const isReported = await setReport(req._report, owner_email);
 
-    res.status(200).json({ isReported });
+    res.status(200).json(isReported);
   } catch (err) {
-    res.status(401).json({ err });
+    res.status(400).json(err);
+  }
+});
+
+// $ Get Pets Nearby.
+app.get("/pets-nearby", async (req, res) => {
+  const { lat, lng } = req.query;
+
+  try {
+    if (!lat && !lng) {
+      res.status(400).json({ message: "All inputs are required" });
+    } else {
+      const hits = await getPetsNearby(lat, lng);
+
+      res.status(200).json(hits);
+    }
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
@@ -125,7 +145,7 @@ app.post("/pet/publish", tokenMiddleware, petMiddleware, async (req, res) => {
 
     res.status(201).json(isCreated);
   } catch (err) {
-    res.status(401).json({ err });
+    res.status(401).json(err);
   }
 });
 
@@ -136,7 +156,7 @@ app.get("/pet/published-by", tokenMiddleware, async (req, res) => {
 
     res.status(201).json(userPets);
   } catch (err) {
-    res.status(401).json({ err });
+    res.status(401).json(err);
   }
 });
 
@@ -171,6 +191,10 @@ app.delete("/pet/:petId/delete", tokenMiddleware, async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
 
 app.listen(port, () => {

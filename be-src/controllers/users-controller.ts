@@ -69,8 +69,7 @@ export const getUserFullname = async (email: string): Promise<any> => {
 };
 
 export const getUserEmail = async (userId: number): Promise<any> => {
-  const user_email = await User.findByPk(userId).then((resUser) => {
+  return await User.findByPk(userId).then((resUser) => {
     return resUser.get("email");
   });
-  return user_email;
 };

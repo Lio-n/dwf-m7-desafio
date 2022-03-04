@@ -21,11 +21,11 @@ class Password extends HTMLElement {
   addListener() {
     const pswrd_1: HTMLInputElement = this.shadow.querySelector("#pswrd_1");
     const showEye: HTMLImageElement = this.shadow.querySelector(".show__eye");
-    const btn: HTMLButtonElement = this.shadow.querySelector("my-button");
+    const myButton: HTMLButtonElement = this.shadow.querySelector("my-button");
     const alertPassword: HTMLTitleElement = this.shadow.querySelector(".alert__incorrect-password");
 
     let isPasswordOk: boolean = false;
-    btn.addEventListener("click", async (e) => {
+    myButton.addEventListener("click", async (e) => {
       e.preventDefault();
 
       if (pswrd_1.value != "") {
@@ -63,34 +63,28 @@ class Password extends HTMLElement {
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
     .root {
       display: flex;
-      align-items: center;
-      height: 100%;
+      height: 80vh;
     }
       .card {
-        margin: 0 auto;
+        margin: auto;
         padding: 20px 30px;
-        width: 420px;
+        width: 22rem;
         border-radius: 5px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      }
-      form {
-        margin: 5px 8px;
+        box-shadow: 0 0 10px rgb(0 0 0 / 20%);
       }
       .form__field {
-        width: 100%;
-        height: 45px;
-        display: flex;
-        margin: 15px 0;
+        margin-bottom: 1.25rem;
         position: relative;
       }
       input {
-        width: 100%;
-        height: 100%;
         border: ${this.niceInput};
-        padding-left: 15px;
+        height: 2.8rem;
+        padding: 0 1rem;
         outline: none;
         border-radius: 5px;
-        font-size: 17px;
+        font-size: 1rem;
+        position: relative;
+        width: 100%;
         transition: all 0.3s;
       }
       form .form__field input:focus { 
@@ -101,7 +95,6 @@ class Password extends HTMLElement {
         position: absolute;
         right: 10px;
         top: 50%;
-        transform: translateY(-50%);
         cursor: pointer;
         display: block;
       }
@@ -116,23 +109,30 @@ class Password extends HTMLElement {
       .alert__incorrect-password {
         display: none;
       }
+      .field__span {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #292643;
+      }
     `;
 
     this.shadow.innerHTML = `
+    <my-header></my-header>
     <section class="root">
         <div class="card">
             <form class="form">
 
-                <h1 class="alert__incorrect-password">Contraseña Incorrecta</h1>
-
                 <div class="form__field">
+                  <span class="field__span">Contraseña</span>
                   <input id="pswrd_1" type="password" placeholder="Contraseña">
                   <div class="show">
                     <img class="show__eye" src="${this.eyeClosed}"/>
                   </div>
                 </div>
                 
-                <my-button backgroundColor="#27ae60">Guardar</my-button>
+                <my-button color="#fff" backgroundColor="#27ae60">Guardar</my-button>
             </form>
         </div>
     </section>`;

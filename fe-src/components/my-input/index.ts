@@ -8,6 +8,7 @@ class Input extends HTMLElement {
   setValue;
   height;
   margin;
+  max_date;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -19,6 +20,7 @@ class Input extends HTMLElement {
     this.setValue = this.getAttribute("set-value") || "";
     this.height = this.getAttribute("height") || "2.8rem";
     this.margin = this.getAttribute("margin") || "0 0 1.25rem 0";
+    this.max_date = this.type == "date" ? `max=${new Date().toLocaleDateString("en-ca")}` : "";
   }
 
   static get observedAttributes() {
@@ -49,7 +51,7 @@ class Input extends HTMLElement {
         <span class="label__span">${this.span}</span>
         <input value="${this.setValue}" class="label__input" name="${this.name}" type="${
       this.type
-    }" placeholder="${this.place_holder}" />
+    }" placeholder="${this.place_holder}" ${this.max_date} />
     </label>
     <style>${this._setStyles()}</style>
     `;
@@ -57,7 +59,7 @@ class Input extends HTMLElement {
     return template;
   }
   _setStyles() {
-    return `*{margin:0;padding:0;box-sizing: border-box;}
+    return `*{margin:0;padding:0;box-sizing: border-box; letter-spacing: 1px;}
   .label {
     display: block;
     margin: ${this.margin};
@@ -65,9 +67,11 @@ class Input extends HTMLElement {
   .label__span {
     display: block;
     margin-bottom: 5px;
-    font-size: 1rem;
+    font-weight: 500;
+    color: #292643;
   }
   .label__input {
+    color: #094f6e;
     border: solid 1px lightgrey;
     width: 100%;
     height: ${this.height};

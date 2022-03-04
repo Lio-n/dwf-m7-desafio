@@ -30,7 +30,7 @@ class Header extends HTMLElement {
 
       if (TOKEN) {
         myMenuFalse.style.display = "none";
-        myMenuTrue.style.display = "block";
+        myMenuTrue.style.display = "flex";
       } else {
         myMenuFalse.style.display = "block";
         myMenuTrue.style.display = "none";
@@ -45,11 +45,14 @@ class Header extends HTMLElement {
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
     header {
         width: 100%;
-        background-color: red;
+        background-color: #094f6e;
         padding: 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: fixed;
+        z-index: 3;
+        top: 0;
     }
     .header__logo {
         width: 3rem;
@@ -99,7 +102,7 @@ class Header extends HTMLElement {
       </div>
 
       <div class="container__menu">
-        <my-menu id="false" ></my-menu>
+        <my-menu id="false"></my-menu>
         <my-menu id="true" style="display: none"></my-menu>
       </div>
 

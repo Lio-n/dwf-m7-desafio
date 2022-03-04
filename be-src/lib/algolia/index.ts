@@ -10,10 +10,21 @@ export const algoliaSet = (petId: any, lat: any, lng: any): void => {
   });
 };
 
-export const algoliaUpdate = (pet): void => {
+export const algoliaUpdate = (pet: object): void => {
   pets_index.partialUpdateObject(pet);
 };
 
-export const algoliaDelete = (petId): void => {
+export const algoliaDelete = (petId: any): void => {
   pets_index.deleteObject(petId);
+};
+
+export const algoliaPetsNearby = async (lat, lng) => {
+  const { hits } = await pets_index.search("", {
+    aroundLatLng: [lat, lng].join(","),
+    aroundRadius: 25000,
+  });
+
+  return hits.map((item) => {
+    return item.objectID;
+  });
 };

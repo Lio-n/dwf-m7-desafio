@@ -21,18 +21,28 @@ class MyPet extends HTMLElement {
   render() {
     const style = document.createElement("style");
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
+    .root {
+      display: flow-root;
+      background-color: #eee;
+    }
     .list {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      justify-content: space-around;
+      justify-content: space-evenly;
       padding:  4rem 2rem;
-    }`;
+    }
+    .root__title {
+      text-align: center;
+      color: #292643;
+      margin-top: 2.5rem;
+    }
+    `;
 
     this.shadow.innerHTML = `
     <my-header></my-header>
     <section class="root">
-        <h1 style="display: inline;">Mis mascotas Reportadas</h1>
+        <h1 class="root__title">Mis mascotas Reportadas</h1>
 
         <div class="list">
             ${this.pets

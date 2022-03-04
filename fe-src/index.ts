@@ -18,3 +18,8 @@ import "./pages/reportar-mascota";
 
 // ? SOMETHING ELSE
 import "./router";
+import { state } from "./state";
+
+(() => {
+  state.init();
+})();

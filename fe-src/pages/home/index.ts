@@ -15,21 +15,21 @@ class Home extends HTMLElement {
     const map: HTMLElement = this.shadow.querySelector("#mapNext");
     state.showAllLostPets(map);
 
+    const home__location: HTMLElement = this.shadow.querySelector(".home__location");
     const button: HTMLButtonElement = this.shadow.querySelector(".get__location");
+
     button.addEventListener("click", (e) => {
       e.preventDefault();
+
       getCurrentPosition();
     });
   }
   render() {
     const style = document.createElement("style");
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
-    .home__cont-title {
-      font-size: 2rem;
-      color: blue;
-    }
     #mapNext {
-      height: 100vh;
+      height: 88vh;
+      width: 100vw;
     }
     .picture__pet {
       width: 3rem;
@@ -40,11 +40,21 @@ class Home extends HTMLElement {
     my-report {
       display: none;
     }
-    .pet__report {
+    .report {
+      display: block;
+      text-align: center;
+    }
+    .pet__report  {
+      color: #D82148;
+      font-weight: bold;
       cursor: pointer;
+    }
+    .pet__report:hover {
+      text-decoration: underline;
     }
     .mapboxgl-popup-content {
       border-radius: 5px;
+      width: 16rem;
     }
     .mapboxgl-popup-close-button {
       margin-right: .1rem;
@@ -53,12 +63,12 @@ class Home extends HTMLElement {
       font-size: .8rem;
     }
     .card__info p {
-      color: hsl(222deg 89% 45%);
+      color: #094f6e;
       margin-bottom: .5rem;
     }
     .card__info span {
       font-weight: bold;
-      color: hsl(233deg 92% 15%);
+      color: #292643;
     }
     .pet__report {
       display: inline-block;
@@ -66,6 +76,18 @@ class Home extends HTMLElement {
       font-weight: bold;
       text-align: center;
       width: 100%;
+      font-size: 1rem;
+    }
+    .home {
+      display: flow-root;
+    }
+    .home__location {
+      margin: 2.5rem auto;
+      text-align: center;
+      max-width: 22rem;
+    }
+    .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right {
+      display: none;
     }
     `;
 
@@ -75,11 +97,14 @@ class Home extends HTMLElement {
     <link defer rel="stylesheet" 
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css" type="text/css" />
 
-    <div class="home">
+    <div class="root">
       <my-header></my-header>
-      <div class="home__cont-title">
-        <h4>Solo puedes reportar mascotas cerca de tu ubicación</h4>
-        <button class="get__location">Dar mi ubicación</button>
+      <div class="home">
+        
+        <div class="home__location">
+            <h1 class="home__title">Solo puedes reportar mascotas cerca de tu ubicación</h1>
+            <my-button class="get__location" color="#fff" margin="1.5rem 0 0" backgroundColor="#2d7a9c">Dar mi ubicación</my-button>
+        </div>
 
         
         <div class="form__mapbox">

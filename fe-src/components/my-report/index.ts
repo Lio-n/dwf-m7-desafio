@@ -125,8 +125,16 @@ class Report extends HTMLElement {
       padding: .5rem 1rem;
       border-radius: 5px;
       font-size: 1rem;
+      color: #094f6e;
       font-family: Helvetica Neue,Arial,Helvetica,sans-serif;
     }
+    textarea:focus {
+      outline: none;
+      border: 1px solid lightgrey;
+      border-color: #27ae60;
+      box-shadow: inset 0 0 3px #2fd072;
+    }
+
     span {
       display: block;
       margin-bottom: 5px;
@@ -154,6 +162,8 @@ class Report extends HTMLElement {
       flex-direction: column;
       justify-content: space-evenly;
       transition: all .3s ease-in-out;
+      background-color: #0000008c;
+      border-radius: 5px;
     }
     p, span {
       margin: 0;
@@ -166,11 +176,13 @@ class Report extends HTMLElement {
     }
     .picture__layer p {
       color: hsl(222deg 89% 45%);
+      color: #fff;
     }
     .picture__layer span {
       font-weight: bold;
       display: inline;
       color: hsl(233deg 92% 15%);
+      color: #fff;
     }
     label {
       display: block;
@@ -178,7 +190,8 @@ class Report extends HTMLElement {
     }
     .alert__phone-number {
         display: none;
-        color: red;
+        color: #D82148;
+        font-weight: bold;
         font-size: .8rem;
         text-align: center;
         margin-bottom: .5rem;
@@ -188,6 +201,9 @@ class Report extends HTMLElement {
       text-align: center;
       margin: .5rem 0;
       color: #00ff4e;
+    }
+    label > span {
+      color: #292643;
     } 
     `;
 
@@ -195,9 +211,9 @@ class Report extends HTMLElement {
     <div class="card__layer">
             <div class="card__picture">
                 <div class="picture__layer">
-                        <p><span>Color:</span>${this.color}</p>
-                        <p><span>Sexo:</span>${this.sex}</p>
-                        <p><span>Raza:</span>${this.breed}</p>
+                        <p><span>Color: </span>${this.color}</p>
+                        <p><span>Sexo: </span>${this.sex}</p>
+                        <p><span>Raza: </span>${this.breed}</p>
                 </div>
                 <img src="${this.pet_pictureUrl}"/>
             </div>
@@ -212,7 +228,7 @@ class Report extends HTMLElement {
               </label>
               <span class="alert__report-sent">¡Reportado con Exito!</span>
 
-              <my-button backgroundColor="#FF9DF5">Enviar<my-button>
+              <my-button backgroundColor="#E900FF" color="#fff">Enviar<my-button>
             </form>
         </div>`;
     this.shadow.appendChild(style);

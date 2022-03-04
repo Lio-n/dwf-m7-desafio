@@ -67,6 +67,7 @@ class MisDatos extends HTMLElement {
         await state.createUser(user_data.pswrd_1);
 
         const isAuth: boolean = await state.authUser(user_data.pswrd_1);
+        console.log({ isAuth });
 
         if (isAuth) {
           Router.go("/");
@@ -111,18 +112,14 @@ class MisDatos extends HTMLElement {
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
     .root {
       display: flex;
-      align-items: center;
-      height: 100%;
+      height: 80vh;
     }
       .card {
-        margin: 0 auto;
         padding: 20px 30px;
-        width: 420px;
+        width: 22rem;
+        margin: auto;
         border-radius: 5px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      }
-      form {
-        margin: 5px 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
       }
       .form__field {
         position: relative;
@@ -180,6 +177,7 @@ class MisDatos extends HTMLElement {
     `;
 
     this.shadow.innerHTML = `
+    <my-header></my-header>
     <section class="root">
         <div class="card">
             <form class="form">
@@ -200,7 +198,7 @@ class MisDatos extends HTMLElement {
                   <span class="alert">Por favor, ingrese la misma contraseña.</span>
                 </div>
                 
-                <my-button backgroundColor="#27ae60">Guardar</my-button>
+                <my-button color="#fff" backgroundColor="#00C897">Guardar</my-button>
             </form>
         </div>
     </section>`;

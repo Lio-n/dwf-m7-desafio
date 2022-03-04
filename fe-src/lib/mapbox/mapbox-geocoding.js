@@ -1,5 +1,7 @@
 import { state } from "../../state";
 
+// # This map it's used by the page reportar-mascota.
+
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 
 let current_location = { lng: null, lat: null };
