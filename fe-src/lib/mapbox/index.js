@@ -51,10 +51,14 @@ const showAllPets = async (map) => {
     const date = new Date(pet.date_last_seen).toISOString().substring(0, 10);
 
     const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
-      <div class="card__info">
-          <p><span>Nombre: </span> ${pet.full_name}</p>
-          <p><span>Visto por última vez: </span> ${date}</p>
-      </div>`);
+    <div class="card__picture">
+        <div class="picture__layer">
+            <p><span>Nombre: </span> ${pet.full_name}</p>
+            <p><span>Raza: </span>${pet.breed}</p>
+            <p><span>Visto por última vez: </span> ${date}</p>
+        </div>
+        <img src="${pet.pictureUrl}"/>
+    </div>`);
 
     // Add markers to the map.
     const marker = new mapboxgl.Marker(el)
@@ -71,7 +75,6 @@ const showAllPets = async (map) => {
 const showPetsNearby = async (map, lat, lng) => {
   const arrPetsNearby = await state.getPetsNearby(lat, lng);
 
-  console.log({ arrPetsNearby });
   // Add markers to the map.
   for (const pet of arrPetsNearby) {
     // Create a DOM element for each marker.
@@ -81,13 +84,20 @@ const showPetsNearby = async (map, lat, lng) => {
     const date = new Date(pet.date_last_seen).toISOString().substring(0, 10);
 
     const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
-      <div class="card__info">
-          <p><span>Nombre: </span> ${pet.full_name}</p>
-          <p><span>Visto por última vez: </span> ${date}</p>
-          <div class="report">
-              <a class="pet__report">Reportar</a>
-          </div>
-      </div>
+    <div class="card__info">
+        <div class="card__picture">
+            <div class="picture__layer">
+                <p><span>Nombre: </span> ${pet.full_name}</p>
+                <p><span>Raza: </span>${pet.breed}</p>
+                <p><span>Visto por última vez: </span> ${date}</p>
+            </div>
+            <img src="${pet.pictureUrl}"/>
+        </div>
+
+        <div class="report">
+            <a class="pet__report">Reportar</a>
+        </div>
+    </div>
 
     <my-report color="${pet.color}" breed="${pet.breed}" sex="${pet.sex}" full_name="${pet.full_name}" published_by="${pet.published_by}" pet_id="${pet.id}" pet_pictureUrl="${pet.pictureUrl}"></my-report>`);
 
@@ -99,13 +109,13 @@ const showPetsNearby = async (map, lat, lng) => {
 
     const _listeners = () => {
       const card__info = popup._content.children[0];
-      const pet__report = card__info.children[2];
       const myReport = popup._content.children[1];
+      const button_report = card__info.children[1];
 
-      pet__report.addEventListener("click", (e) => {
+      button_report.addEventListener("click", (e) => {
         e.preventDefault();
         card__info.style.display = "none";
-        myReport.style.display = "initial";
+        myReport.style.display = "block";
       });
 
       el.addEventListener("click", (e) => {

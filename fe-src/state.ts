@@ -28,7 +28,6 @@ const state = {
   init() {
     // Get the local data
     const localData = JSON.parse(localStorage.getItem("saved-state"));
-    console.log({ localData });
     // If localdata retuns "null", do nothing
     if (!localData) {
       return;
@@ -220,8 +219,7 @@ const state = {
       cb();
     }
     localStorage.setItem("saved-state", JSON.stringify(newState));
-
-    console.log("soy el state, he cambiado", i++, this.data);
+    // console.log("soy el state, he cambiado", i++, this.data);
   },
 
   subscribe(callback: (any) => any) {

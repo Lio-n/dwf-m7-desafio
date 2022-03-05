@@ -112,6 +112,9 @@ class Edit_Report extends HTMLElement {
           }
         });
 
+        const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
+        alert__wait.style.display = "block";
+
         await state.updatePet(this.pet);
         Router.go("/mis-mascotas");
       }
@@ -126,7 +129,6 @@ class Edit_Report extends HTMLElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: #eee;
         padding: 0 1rem 2rem;
     }
 
@@ -228,6 +230,12 @@ class Edit_Report extends HTMLElement {
     .delete__report:hover {
       text-decoration: underline;
     }
+    .alert__wait  {
+      display: none;
+      text-align: center;
+      margin: .5rem 0;
+      color: #666f88;
+    }
     `;
 
     this.shadow.innerHTML = `
@@ -292,7 +300,8 @@ class Edit_Report extends HTMLElement {
                 <span>Puede ser una dirección, un barrio o una ciudad.</span>
             </div>
           </div>
-      
+          
+          <span class="alert__wait">Actualizando Reporte...</span>
           <my-button class="button__confirm-report" margin="0 0 1.5rem 0" color="#fff" backgroundColor="#00C897">Guardar</my-button>
           <my-button class="button__change-state" margin="0 0 1.5rem 0" backgroundColor="#ffd700" color="#fff">Reportar como ${
             this.pet.state == "lost" ? "encontrado" : "perdido"

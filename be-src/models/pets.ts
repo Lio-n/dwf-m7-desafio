@@ -16,7 +16,6 @@ Pet.init(
     last_location_lat: DataTypes.FLOAT,
     last_location_lng: DataTypes.FLOAT,
     published_by: DataTypes.INTEGER,
-    dominate_color: DataTypes.STRING,
   },
   {
     sequelize,

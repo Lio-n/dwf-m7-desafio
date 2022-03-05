@@ -25,10 +25,5 @@
     "build:fe": "parcel build ./fe-src/index.html",
     "build": "yarn build:fe && yarn build:be",
     "start": "node ./dev.js"
-  },
-  "devDependencies": {
-    "buffer": "^6.0.3",
-    "path-browserify": "^1.0.1",
-    "process": "^0.11.10"
   }
 }

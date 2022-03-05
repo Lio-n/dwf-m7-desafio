@@ -108,6 +108,10 @@ class Report extends HTMLElement {
           }
         });
 
+        const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
+        alert__wait.style.display = "block";
+
+        btnReport.shadowRoot.querySelector("button").setAttribute("disabled", "");
         await state.publishPet(pet);
 
         Router.go("/mis-mascotas");
@@ -123,7 +127,6 @@ class Report extends HTMLElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: #eee;
         padding: 0 1rem 2rem;
     }
 
@@ -213,6 +216,13 @@ class Report extends HTMLElement {
     .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right {
       display: none;
     }
+
+    .alert__wait  {
+      display: none;
+      text-align: center;
+      margin: .5rem 0;
+      color: #666f88;
+    }
     `;
 
     this.shadow.innerHTML = `
@@ -265,7 +275,8 @@ class Report extends HTMLElement {
                 <span>Puede ser una dirección, un barrio o una ciudad.</span>
             </div>
           </div>
-      
+          
+          <span class="alert__wait">Publicando Reporte...</span>
           <my-button class="button__confirm-report" margin="0 0 1.5rem 0" color="#fff" backgroundColor="#2d7a9c">Reportar como perdido</my-button>
           <my-button class="button__cancel-report" margin="0 0 1.5rem 0" color="#fff" backgroundColor="#8da9c4">Cancelar</my-button>
         </form>

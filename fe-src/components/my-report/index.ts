@@ -6,7 +6,6 @@ class Report extends HTMLElement {
   pet_pictureUrl;
   full_name;
   color;
-  breed;
   sex;
   published_by;
   errorInput: string = "1px solid red";
@@ -20,7 +19,6 @@ class Report extends HTMLElement {
     this.published_by = this.getAttribute("published_by") || "";
     this.full_name = this.getAttribute("full_name");
     this.color = this.getAttribute("color");
-    this.breed = this.getAttribute("breed");
     this.sex = this.getAttribute("sex");
   }
   connectedCallback() {
@@ -40,6 +38,7 @@ class Report extends HTMLElement {
       message: undefined,
       pet_id: this.pet_id,
       published_by: this.published_by,
+      pet_name: this.full_name,
     };
 
     const alert__phoneNumber: HTMLElement = this.shadow.querySelector(".alert__phone-number");
@@ -91,8 +90,11 @@ class Report extends HTMLElement {
         if (isValidate) {
           alert__phoneNumber.style.display = "none";
           const alert__reportSent: HTMLElement = this.shadow.querySelector(".alert__report-sent");
+          const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
 
+          alert__wait.style.display = "block";
           const isReported: boolean = await state.sendReport(report_data);
+          alert__wait.style.display = "none";
 
           isReported ? (alert__reportSent.style.display = "block") : "";
         } else {
@@ -109,10 +111,6 @@ class Report extends HTMLElement {
     .card {
       max-width: 22rem;
       padding: 1rem;
-    }
-    .card__picture img {
-      width: 100%;
-      height: 100%;
     }
     .card__form {
       font-size: 1rem;
@@ -143,8 +141,9 @@ class Report extends HTMLElement {
     .card__picture img {
       display: block;
       border-radius: 5px;
-      height: 9rem;
+      height: 10rem;
       object-fit: cover;
+      width: 100%;
     }
     .card__picture {
       position: relative;
@@ -196,11 +195,14 @@ class Report extends HTMLElement {
         text-align: center;
         margin-bottom: .5rem;
     }
-    .alert__report-sent {
+    .alert__report-sent, .alert__wait  {
       display: none;
       text-align: center;
       margin: .5rem 0;
       color: #00ff4e;
+    }
+    .alert__wait {
+      color: #666f88;
     }
     label > span {
       color: #292643;
@@ -211,9 +213,9 @@ class Report extends HTMLElement {
     <div class="card__layer">
             <div class="card__picture">
                 <div class="picture__layer">
+                        <p><span>Nombre: </span>${this.full_name}</p>
                         <p><span>Color: </span>${this.color}</p>
-                        <p><span>Sexo: </span>${this.sex}</p>
-                        <p><span>Raza: </span>${this.breed}</p>
+                        <p><span>Sexo: </span>${this.sex == "male" ? "Macho" : "Hembra"}</p>
                 </div>
                 <img src="${this.pet_pictureUrl}"/>
             </div>
@@ -226,6 +228,7 @@ class Report extends HTMLElement {
                   <span>Dondé lo viste?</span>
                   <textarea name="message"></textarea>
               </label>
+              <span class="alert__wait">Enviando reporte...</span>
               <span class="alert__report-sent">¡Reportado con Exito!</span>
 
               <my-button backgroundColor="#E900FF" color="#fff">Enviar<my-button>

@@ -59,17 +59,6 @@ class Home extends HTMLElement {
     .mapboxgl-popup-close-button {
       margin-right: .1rem;
     }
-    .card__info {
-      font-size: .8rem;
-    }
-    .card__info p {
-      color: #094f6e;
-      margin-bottom: .5rem;
-    }
-    .card__info span {
-      font-weight: bold;
-      color: #292643;
-    }
     .pet__report {
       display: inline-block;
       margin-top: .5rem;
@@ -86,8 +75,61 @@ class Home extends HTMLElement {
       text-align: center;
       max-width: 22rem;
     }
+    .home__title {
+      color: #292643;
+    }
     .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right {
       display: none;
+    }
+
+
+    span {
+      display: block;
+    }
+    p, span {
+      margin: 0;
+    }
+    .card__picture img {
+      display: block;
+      border-radius: 5px;
+      object-fit: cover;
+      width: 100%;
+      height: 10rem;
+    }
+    
+    .card__picture:hover img {
+      filter: blur(1px);
+    }
+
+    .card__picture {
+      position: relative;
+    }
+    .picture__layer {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      z-index: 2;
+      font-size: 1rem;
+      padding: 1rem;
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      justify-content: space-evenly;
+      transition: all .3s ease-in-out;
+      background-color: #0000008c;
+      border-radius: 5px;
+    }
+
+    .card__picture:hover .picture__layer {
+      opacity: 1;
+    }
+    .picture__layer p {
+      color: #fff;
+    }
+    .picture__layer span {
+      font-weight: bold;
+      display: inline;
+      color: #fff;
     }
     `;
 

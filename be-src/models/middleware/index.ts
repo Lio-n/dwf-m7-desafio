@@ -91,6 +91,7 @@ export const reportMiddleware = async (req, res, next) => {
     message: undefined,
     pet_id: undefined,
     published_by: undefined,
+    pet_name:undefined
   };
 
   try {

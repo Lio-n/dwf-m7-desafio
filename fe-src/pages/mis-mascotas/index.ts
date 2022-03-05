@@ -23,7 +23,6 @@ class MyPet extends HTMLElement {
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
     .root {
       display: flow-root;
-      background-color: #eee;
     }
     .list {
       display: flex;

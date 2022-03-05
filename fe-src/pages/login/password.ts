@@ -71,6 +71,7 @@ class Password extends HTMLElement {
         width: 22rem;
         border-radius: 5px;
         box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+        background-color: #fff;
       }
       .form__field {
         margin-bottom: 1.25rem;

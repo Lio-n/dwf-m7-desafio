@@ -64,10 +64,12 @@ class MisDatos extends HTMLElement {
 
         state.setState({ ...state.getState(), full_name: user_data.full_name });
 
+        const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
+        alert__wait.style.display = "block";
+
         await state.createUser(user_data.pswrd_1);
 
         const isAuth: boolean = await state.authUser(user_data.pswrd_1);
-        console.log({ isAuth });
 
         if (isAuth) {
           Router.go("/");
@@ -120,6 +122,7 @@ class MisDatos extends HTMLElement {
         margin: auto;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        background-color: #fff;
       }
       .form__field {
         position: relative;
@@ -174,6 +177,12 @@ class MisDatos extends HTMLElement {
         color: red;
         display: none;
       }
+      .alert__wait  {
+        display: none;
+        text-align: center;
+        margin: .5rem 0;
+        color: #666f88;
+      }
     `;
 
     this.shadow.innerHTML = `
@@ -197,7 +206,8 @@ class MisDatos extends HTMLElement {
                 <div class="password__alert">
                   <span class="alert">Por favor, ingrese la misma contraseña.</span>
                 </div>
-                
+
+                <span class="alert__wait">Actualizando Mis datos...</span>
                 <my-button color="#fff" backgroundColor="#00C897">Guardar</my-button>
             </form>
         </div>
