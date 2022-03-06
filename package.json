@@ -12,10 +12,11 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.15",
-    "parcel": "^2.3.1",
+    "parcel": "^2.3.2",
     "pg": "8.7.1",
     "pg-hstore": "2.3.4",
-    "sequelize": "6.13.0"
+    "sequelize": "6.13.0",
+    "typescript": "^4.6.2"
   },
   "scripts": {
     "dev:be": "nodemon --watch './be-src/index.ts' --exec 'ts-node ./be-src/index.ts'",
