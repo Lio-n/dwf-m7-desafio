@@ -38,7 +38,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json({ limit: "75mb" }));
-app.use(express.static("dist"));
+app.use(express.static("fe-dist"));
 
 const PORT = process.env.PORT || 3000;
 
