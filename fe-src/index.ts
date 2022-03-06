@@ -1,7 +1,7 @@
 // ? COMPONENTS
 import "./components/my-dropzone";
 import "./components/my-header";
-import "./components/my-header/menu";
+import "./components/my-menu";
 import "./components/my-button";
 import "./components/my-input";
 import "./components/my-pet";

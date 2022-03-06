@@ -15,7 +15,6 @@ class Home extends HTMLElement {
     const map: HTMLElement = this.shadow.querySelector("#mapNext");
     state.showAllLostPets(map);
 
-    const home__location: HTMLElement = this.shadow.querySelector(".home__location");
     const button: HTMLButtonElement = this.shadow.querySelector(".get__location");
 
     button.addEventListener("click", (e) => {

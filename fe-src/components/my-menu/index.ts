@@ -1,4 +1,4 @@
-export class Menu extends HTMLElement {
+class Menu extends HTMLElement {
   shadow: ShadowRoot;
   closeURL: string =
     "https://raw.githubusercontent.com/Lio-n/FM-rock-paper-scissors/f6f07ed2a35bfeb7515f66990d3125efda9fcdda/src/assets/images/icon-close.svg";

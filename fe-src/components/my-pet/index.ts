@@ -1,6 +1,4 @@
-const pet_picture = require("../../assets/pet_comrade.svg");
-const pet_update = require("../../assets/pet_update.svg");
-const unicorn = require("../../assets/Unicorn.png");
+const update_icon = require("../../assets/update_icon.svg");
 
 class Pet extends HTMLElement {
   shadow: ShadowRoot;
@@ -84,7 +82,7 @@ class Pet extends HTMLElement {
     <div class="card">
         <div class="pet">
             <div class="pet__layer">
-                <img class="picture__update" src="${pet_update}" />
+                <img class="picture__update" src="${update_icon}" />
             </div>
             <img class="pet__picture" src="${this.pet_picture}" />
         </div>

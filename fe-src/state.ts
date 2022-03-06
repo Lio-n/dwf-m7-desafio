@@ -1,6 +1,6 @@
 import { setPetsOnMap } from "./lib/mapbox";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = process.env.API_BASE_URL;
 let i = 0;
 
 const state = {
@@ -40,7 +40,7 @@ const state = {
     return this.data;
   },
 
-  // # Send Report
+  // # Send Report.
   async sendReport(report_data): Promise<boolean> {
     return await (
       await fetch(`${API_BASE_URL}/report/pet`, {
@@ -82,14 +82,14 @@ const state = {
     ).json();
   },
 
-  // # Check If User Exists : Return Boolean
+  // # Check If User Exists.
   async checkUser(email: string): Promise<boolean> {
     this.setState({ ...this.getState(), email });
 
     return await (await fetch(`${API_BASE_URL}/exists/${email}`)).json();
   },
 
-  // # Creater User : Return Boolean
+  // # Creater User.
   async createUser(password: string): Promise<void> {
     const { email, full_name } = this.getState();
 
@@ -121,7 +121,7 @@ const state = {
     return res.isToken;
   },
 
-  // # User's Email : Return string
+  // # User's Email.
   async getUserEmail(published_by: number): Promise<string> {
     return await (
       await fetch(`${API_BASE_URL}/user/${published_by}`, {
@@ -134,6 +134,20 @@ const state = {
   },
 
   // ! Below here you need a TOKEN
+
+  // # Update User.
+  updateUser(password: string): void {
+    const { full_name, TOKEN } = this.getState();
+
+    fetch(`${API_BASE_URL}/user/update`, {
+      method: "put",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `bearer ${TOKEN}`,
+      },
+      body: JSON.stringify({ full_name, password }),
+    });
+  },
 
   // # Publish Pet
   async publishPet(pet): Promise<void> {
@@ -213,7 +227,7 @@ const state = {
     });
   },
 
-  setState(newState) {
+  setState(newState): void {
     this.data = newState;
     for (const cb of this.listeners) {
       cb();
@@ -222,7 +236,7 @@ const state = {
     // console.log("soy el state, he cambiado", i++, this.data);
   },
 
-  subscribe(callback: (any) => any) {
+  subscribe(callback: (any) => any): void {
     this.listeners.push(callback);
   },
 };

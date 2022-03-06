@@ -13,10 +13,10 @@ class Login extends HTMLElement {
     this.render();
   }
   addListener() {
-    const checkUser = () => {
+    const checkUser = (): void => {
       const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
 
-      const validateEmail = (email) => {
+      const validateEmail = (email): boolean => {
         const res =
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return res.test(email);
@@ -31,6 +31,8 @@ class Login extends HTMLElement {
         let isValid = validateEmail(email);
 
         if (!!email && isValid) {
+          alert__wait.style.display = "block";
+
           myInput.setAttribute("border-color", this.niceInput);
           myButton.shadowRoot.querySelector("button").setAttribute("disabled", "");
 
@@ -61,6 +63,9 @@ class Login extends HTMLElement {
     }
     .alert__wait {
       display: none;
+      text-align: center;
+      margin: .5rem 0;
+      color: #666f88;
     }
     `;
 
@@ -71,7 +76,7 @@ class Login extends HTMLElement {
         
         <form class="form">
             <my-input span="Email" type="email" placeholder="john.doe@example.com..."></my-input>
-            <span class="alert__wait">Por favor, espere.</span>
+            <span class="alert__wait">Por favor, espere...</span>
             <my-button color="#fff" backgroundColor="#2d7a9c">Ingresar</my-button>
         <form>
         </div>

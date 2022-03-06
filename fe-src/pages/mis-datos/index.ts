@@ -28,7 +28,7 @@ class MisDatos extends HTMLElement {
       pswrd_2: undefined,
     };
 
-    const checkInputs = () => {
+    const checkInputs = (): void => {
       const btnSave: HTMLButtonElement = this.shadow.querySelector("my-button");
 
       // # Check if the value of each 'my-input' has been completed.
@@ -56,7 +56,7 @@ class MisDatos extends HTMLElement {
       });
     };
 
-    const validateInputs = async (arr) => {
+    const validateInputs = async (arr): Promise<void> => {
       const passwordAlert: HTMLElement = this.shadow.querySelector(".alert");
 
       if (!arr.includes(false) && user_data.pswrd_1 == user_data.pswrd_2) {
@@ -64,22 +64,31 @@ class MisDatos extends HTMLElement {
 
         state.setState({ ...state.getState(), full_name: user_data.full_name });
 
-        const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
-        alert__wait.style.display = "block";
+        const { TOKEN } = state.getState();
 
-        await state.createUser(user_data.pswrd_1);
+        // if TOKEN;
+        // * Then la Cuenta fue creada, y se desea actualizar la data.
+        // Else;
+        // * Then la Cuenta no existe, y se crea una.
 
-        const isAuth: boolean = await state.authUser(user_data.pswrd_1);
-
-        if (isAuth) {
+        if (!!TOKEN) {
+          state.updateUser(user_data.pswrd_1);
           Router.go("/");
+        } else {
+          const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
+          alert__wait.style.display = "block";
+
+          await state.createUser(user_data.pswrd_1);
+          const isAuth: boolean = await state.authUser(user_data.pswrd_1);
+
+          if (isAuth) Router.go("/");
         }
       } else {
         passwordAlert.style.display = "initial";
       }
     };
 
-    const showPassword = () => {
+    const showPassword = (): void => {
       let user_pswrd = {
         pswrd_1: undefined,
         pswrd_2: undefined,
@@ -207,7 +216,7 @@ class MisDatos extends HTMLElement {
                   <span class="alert">Por favor, ingrese la misma contraseña.</span>
                 </div>
 
-                <span class="alert__wait">Actualizando Mis datos...</span>
+                <span class="alert__wait">Creado usuario...</span>
                 <my-button color="#fff" backgroundColor="#00C897">Guardar</my-button>
             </form>
         </div>

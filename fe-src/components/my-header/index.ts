@@ -1,5 +1,6 @@
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
+const paw_svg = require("../../assets/paw_favicon.svg");
 
 class Header extends HTMLElement {
   shadow: ShadowRoot;
@@ -57,6 +58,7 @@ class Header extends HTMLElement {
     .header__logo {
         width: 3rem;
         height: 3rem;
+        cursor: pointer;
     }
     .header__menu-burger {
         width: 3rem;
@@ -87,7 +89,7 @@ class Header extends HTMLElement {
 
     this.shadow.innerHTML = `
     <header>
-      <img class="header__logo" src="https://freesvg.org/img/Paw_Print.png"/>
+      <img class="header__logo" href="/" src="${paw_svg}"/>
       
       <div class="cont__login">
 

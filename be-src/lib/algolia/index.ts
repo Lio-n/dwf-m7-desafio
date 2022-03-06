@@ -18,7 +18,7 @@ export const algoliaDelete = (petId: any): void => {
   pets_index.deleteObject(petId);
 };
 
-export const algoliaPetsNearby = async (lat, lng) => {
+export const algoliaPetsNearby = async (lat, lng): Promise<string[]> => {
   const { hits } = await pets_index.search("", {
     aroundLatLng: [lat, lng].join(","),
     aroundRadius: 25000,

@@ -2,7 +2,7 @@
 import { algoliaSet, algoliaUpdate, algoliaDelete, algoliaPetsNearby } from "../lib/algolia";
 import { Pet } from "../models";
 
-export const getAllPets = async (): Promise<object> => {
+export const getAllPets = async (): Promise<object[]> => {
   return await Pet.findAll({ where: { state: "lost" } });
 };
 
@@ -21,7 +21,7 @@ export const publishPet = async (pet_data: object, userId: number): Promise<bool
   return pet ? true : false;
 };
 
-export const getUserPets = async (userId: number): Promise<object> => {
+export const getUserPets = async (userId: number): Promise<object[]> => {
   return await Pet.findAll({
     attributes: ["full_name", "pictureUrl", "id"],
     where: { published_by: userId },
@@ -58,7 +58,7 @@ export const deletePet = async (userId: number, petId: number): Promise<boolean>
   return true;
 };
 
-export const getPetsNearby = async (lat, lng) => {
+export const getPetsNearby = async (lat, lng): Promise<object[]> => {
   // $ Algolia
   const ids = await algoliaPetsNearby(lat, lng);
   return await Pet.findAll({

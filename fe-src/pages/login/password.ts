@@ -22,7 +22,8 @@ class Password extends HTMLElement {
     const pswrd_1: HTMLInputElement = this.shadow.querySelector("#pswrd_1");
     const showEye: HTMLImageElement = this.shadow.querySelector(".show__eye");
     const myButton: HTMLButtonElement = this.shadow.querySelector("my-button");
-    const alertPassword: HTMLTitleElement = this.shadow.querySelector(".alert__incorrect-password");
+    const alert_wrongPsw: HTMLElement = this.shadow.querySelector(".alert__wrong-password");
+    const alert_wait: HTMLElement = this.shadow.querySelector(".alert__wait");
 
     let isPasswordOk: boolean = false;
     myButton.addEventListener("click", async (e) => {
@@ -37,9 +38,12 @@ class Password extends HTMLElement {
       }
 
       if (isPasswordOk) {
+        alert_wrongPsw.style.display = "none";
+        alert_wait.style.display = "block";
         const isAuthed: boolean = await state.authUser(pswrd_1.value);
+        alert_wait.style.display = "none";
 
-        isAuthed ? Router.go("/") : (alertPassword.style.display = "block");
+        isAuthed ? Router.go("/") : (alert_wrongPsw.style.display = "block");
       }
     });
 
@@ -117,6 +121,15 @@ class Password extends HTMLElement {
         font-weight: 500;
         color: #292643;
       }
+      .alert__wait, .alert__wrong-password {
+        display: none;
+        text-align: center;
+        margin: .5rem 0;
+        color: #666f88;
+      }
+      .alert__wrong-password {
+        color: #D82148;
+      }
     `;
 
     this.shadow.innerHTML = `
@@ -132,7 +145,9 @@ class Password extends HTMLElement {
                     <img class="show__eye" src="${this.eyeClosed}"/>
                   </div>
                 </div>
-                
+
+                <span class="alert__wrong-password">Contraseña incorrecta.</span>
+                <span class="alert__wait">Por favor, espere...</span>
                 <my-button color="#fff" backgroundColor="#27ae60">Guardar</my-button>
             </form>
         </div>

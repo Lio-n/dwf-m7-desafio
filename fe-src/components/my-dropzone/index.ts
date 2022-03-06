@@ -1,8 +1,8 @@
 import Dropzone from "dropzone";
 import { state } from "../../state";
 
-const modifyPng = require("../../assets/modify_picture.png");
-const addPicture = require("../../assets/add_picture.png");
+const modify_icon = require("../../assets/modify_icon.svg");
+const add_icon = require("../../assets/add_icon.svg");
 
 class Picture extends HTMLElement {
   shadow: ShadowRoot;
@@ -27,7 +27,7 @@ class Picture extends HTMLElement {
                 <img data-dz-thumbnail class="dropzone__picture" style="max-width: 20rem; display: block; border-radius: 10px; min-width: 6rem; max-height: 21rem; min-height: 15rem;"/>
             </div>
             <div class="pet__layer">
-                <img class="picture__update" src="${modifyPng}" />
+                <img class="picture__update" src="${modify_icon}" />
             </div>
         </div>`;
 
@@ -148,7 +148,7 @@ class Picture extends HTMLElement {
     this.shadow.innerHTML = `
     <div class="root">
         <div class="pet__picture">
-            <img class="pet__add-picture" src="${addPicture}" />
+            <img class="pet__add-picture" src="${add_icon}" />
         </div>
     </div>`;
 

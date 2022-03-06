@@ -3,6 +3,9 @@
     "target": "ESNext",
     "module": "CommonJS",
     "moduleResolution": "node",
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "outDir": "be-dist"
+  },
+  "includes": ["./be-src/**/*.ts"],
+  "exclude": ["./fe-src/**/*.ts"]
 }

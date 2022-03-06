@@ -9,7 +9,6 @@ export const getSHA256ofString = (text: string): string => {
 type user = {
   full_name: string;
   password: string;
-  email: string;
 };
 
 export const existsUser = async (email: string): Promise<boolean> => {
@@ -18,7 +17,7 @@ export const existsUser = async (email: string): Promise<boolean> => {
   return exists ? true : false;
 };
 
-export const createUser = async (userData): Promise<{ id?: any; isCreated: boolean }> => {
+export const createUser = async (userData): Promise<boolean> => {
   const { full_name, password, email } = userData;
 
   // * User
@@ -27,24 +26,21 @@ export const createUser = async (userData): Promise<{ id?: any; isCreated: boole
     defaults: { full_name, email },
   });
 
-  if (created) {
-    // * Auth
-    await Auth.findOrCreate({
-      where: { user_id: user.get("id") },
-      defaults: {
-        email,
-        password: getSHA256ofString(password),
-        user_id: user.get("id"),
-      },
-    });
-    return { isCreated: true };
-  }
+  // * Auth
+  await Auth.findOrCreate({
+    where: { user_id: user.get("id") },
+    defaults: {
+      email,
+      password: getSHA256ofString(password),
+      user_id: user.get("id"),
+    },
+  });
 
-  return { id: user.get("id"), isCreated: false };
+  return true;
 };
 
-export const updateProfile = async (userId, updateData: user): Promise<boolean> => {
-  const { full_name, password } = updateData;
+export const updateUser = (userId, dataToUpdate: user): boolean => {
+  const { full_name, password } = dataToUpdate;
 
   // * User
   User.findByPk(userId).then((userRes) => {
