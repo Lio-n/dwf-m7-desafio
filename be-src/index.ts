@@ -40,7 +40,7 @@ app.use(cors());
 app.use(express.json({ limit: "75mb" }));
 app.use(express.static("fe-dist"));
 
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // ## ヾ(●ω●)ノ ##
 
@@ -200,6 +200,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../fe-dist/index.html"));
 });
 
-app.listen(PORT, () => {
-  console.table({ message: "Server listen on port", PORT });
+app.listen(port, () => {
+  console.table({ message: "Server listen on port", port });
 });
