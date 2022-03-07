@@ -74,7 +74,7 @@ const showAllPets = async (map) => {
 
 const showPetsNearby = async (map, lng, lat) => {
   const arrPetsNearby = await state.getPetsNearby(lat, lng);
-  console.log({ arrPetsNearby });
+
   // Add markers to the map.
   for (const pet of arrPetsNearby) {
     // Create a DOM element for each marker.

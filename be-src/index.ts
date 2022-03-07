@@ -54,7 +54,6 @@ app.get("/exists/:email", async (req, res) => {
     res.status(200).json(exists);
   } catch (err) {
     res.status(400).json(err);
-    console.error(err);
   }
 });
 
@@ -66,7 +65,6 @@ app.post("/auth", userMiddleware, async (req, res) => {
     res.status(201).json(isCreated);
   } catch (err) {
     res.status(409).json(err);
-    console.error(err);
   }
 });
 
@@ -83,7 +81,6 @@ app.post("/auth/token", authMiddleware, async (req, res) => {
     }
   } catch (err) {
     res.status(401).json(err);
-    console.error(err);
   }
 });
 
@@ -95,7 +92,6 @@ app.get("/pet", async (req, res) => {
     res.status(201).json(allPets);
   } catch (err) {
     res.status(400).json(err);
-    console.error(err);
   }
 });
 
@@ -109,7 +105,6 @@ app.post("/report/pet", reportMiddleware, async (req, res) => {
     res.status(200).json(isReported);
   } catch (err) {
     res.status(400).json(err);
-    console.error(err);
   }
 });
 
@@ -127,7 +122,6 @@ app.get("/pets-nearby", async (req, res) => {
     }
   } catch (err) {
     res.status(400).json(err);
-    console.error(err);
   }
 });
 
@@ -144,7 +138,6 @@ app.put("/user/update", tokenMiddleware, async (req, res) => {
     res.status(204).json(isUpdated);
   } catch (err) {
     res.status(409).json(err);
-    console.error(err);
   }
 });
 
@@ -156,7 +149,6 @@ app.post("/pet/publish", tokenMiddleware, petMiddleware, async (req, res) => {
     res.status(201).json(isCreated);
   } catch (err) {
     res.status(401).json(err);
-    console.error(err);
   }
 });
 
@@ -168,7 +160,6 @@ app.get("/pet/published-by", tokenMiddleware, async (req, res) => {
     res.status(201).json(userPets);
   } catch (err) {
     res.status(401).json(err);
-    console.error(err);
   }
 });
 
@@ -180,7 +171,6 @@ app.get("/pet/:petId", tokenMiddleware, async (req, res) => {
     res.status(200).json(onePet);
   } catch (err) {
     res.status(400).json(err);
-    console.error(err);
   }
 });
 
@@ -192,7 +182,6 @@ app.put("/pet/:petId/update", tokenMiddleware, petMiddleware, async (req, res) =
     res.status(200).json(isUpdated);
   } catch (err) {
     res.status(400).json(err);
-    console.error(err);
   }
 });
 
@@ -204,22 +193,13 @@ app.delete("/pet/:petId/delete", tokenMiddleware, async (req, res) => {
     res.status(200).json(isDeleted);
   } catch (err) {
     res.status(400).json(err);
-    console.error(err);
   }
 });
 
 app.get("*", (req, res) => {
-  try {
-    res.sendFile(path.join(__dirname, "../fe-dist/index.html"));
-  } catch (err) {
-    console.error(err);
-  }
+  res.sendFile(path.join(__dirname, "../fe-dist/index.html"));
 });
 
 app.listen(port, () => {
-  try {
-    console.table({ message: "Server listen on port", port });
-  } catch (err) {
-    console.error(err);
-  }
+  console.table({ message: "Server listen on port", port });
 });
