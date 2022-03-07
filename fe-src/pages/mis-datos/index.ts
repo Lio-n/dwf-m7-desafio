@@ -57,10 +57,11 @@ class MisDatos extends HTMLElement {
     };
 
     const validateInputs = async (arr): Promise<void> => {
-      const passwordAlert: HTMLElement = this.shadow.querySelector(".alert");
+      const alert__password: HTMLElement = this.shadow.querySelector(".alert");
+      const alert__updated: HTMLElement = this.shadow.querySelector(".alert__updated");
 
       if (!arr.includes(false) && user_data.pswrd_1 == user_data.pswrd_2) {
-        passwordAlert.style.display = "none";
+        alert__password.style.display = "none";
 
         state.setState({ ...state.getState(), full_name: user_data.full_name });
 
@@ -72,8 +73,10 @@ class MisDatos extends HTMLElement {
         // * Then la Cuenta no existe, y se crea una.
 
         if (!!TOKEN) {
+          alert__updated.style.display = "block";
+
           state.updateUser(user_data.pswrd_1);
-          Router.go("/");
+          // Router.go("/");
         } else {
           const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
           alert__wait.style.display = "block";
@@ -84,7 +87,8 @@ class MisDatos extends HTMLElement {
           if (isAuth) Router.go("/");
         }
       } else {
-        passwordAlert.style.display = "initial";
+        alert__updated.style.display = "none";
+        alert__password.style.display = "initial";
       }
     };
 
@@ -186,11 +190,14 @@ class MisDatos extends HTMLElement {
         color: red;
         display: none;
       }
-      .alert__wait  {
+      .alert__wait, .alert__updated {
         display: none;
         text-align: center;
         margin: .5rem 0;
         color: #666f88;
+      }
+      .alert__updated {
+        color: #00ff4e;
       }
     `;
 
@@ -216,6 +223,7 @@ class MisDatos extends HTMLElement {
                   <span class="alert">Por favor, ingrese la misma contraseña.</span>
                 </div>
 
+                <span class="alert__updated">¡Datos Actualizados!</span>
                 <span class="alert__wait">Creado usuario...</span>
                 <my-button color="#fff" backgroundColor="#00C897">Guardar</my-button>
             </form>

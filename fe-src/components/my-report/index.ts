@@ -174,13 +174,11 @@ class Report extends HTMLElement {
       opacity: 1;
     }
     .picture__layer p {
-      color: hsl(222deg 89% 45%);
       color: #fff;
     }
     .picture__layer span {
       font-weight: bold;
       display: inline;
-      color: hsl(233deg 92% 15%);
       color: #fff;
     }
     label {

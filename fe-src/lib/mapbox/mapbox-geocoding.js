@@ -4,19 +4,31 @@ import { state } from "../../state";
 
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 
-let current_location = { lng: null, lat: null };
+// # Set Marker options.
+let marker = new mapboxgl.Marker({
+  color: "violet",
+  draggable: true,
+});
 
+let current_location = { lng: null, lat: null };
 export const getLocationBySearch = (mapContainer, buttonEl) => {
   const map = initMap(mapContainer);
   initSearch(map);
 
+  const { pet } = state.getState();
+  if (!!pet.last_location_lat) {
+    map.flyTo({ center: [pet.last_location_lng, pet.last_location_lat], zoom: 10 });
+    marker.setLngLat([pet.last_location_lng, pet.last_location_lat]).addTo(map);
+  }
+
   buttonEl.addEventListener("click", (e) => {
     e.preventDefault();
+    const { lng, lat } = marker.getLngLat();
 
     // $ Set Location lng and lat.
     const { pet } = state.getState();
-    pet.last_location_lat = current_location.lng;
-    pet.last_location_lng = current_location.lat;
+    pet.last_location_lat = current_location.lat || lat;
+    pet.last_location_lng = current_location.lng || lng;
   });
 };
 
@@ -31,12 +43,6 @@ const initMap = (mapContainer) => {
 };
 
 const initSearch = (map) => {
-  // # Set Marker options.
-  let marker = new mapboxgl.Marker({
-    color: "violet",
-    draggable: true,
-  });
-
   // # Searcher.
   const geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,

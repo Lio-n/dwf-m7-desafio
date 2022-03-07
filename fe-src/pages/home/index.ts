@@ -28,7 +28,11 @@ class Home extends HTMLElement {
     style.innerHTML = `*{margin:0;padding:0;box-sizing: border-box;}
     #mapNext {
       height: 88vh;
-      width: 100vw;
+      max-width: 90%;
+      margin: 0 auto 2.5rem;
+      box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+      border-radius: 5px;
+      max-height: 35rem;
     }
     .picture__pet {
       width: 3rem;

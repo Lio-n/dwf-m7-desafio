@@ -12,6 +12,10 @@ class Header extends HTMLElement {
     this.render();
   }
   addListener() {
+    const header__logo: HTMLImageElement = this.shadow.querySelector(".header__logo");
+    header__logo.addEventListener("click", () => {
+      Router.go("/");
+    });
     const routerBtn = () => {
       const buttonEl: HTMLButtonElement[] = Array.from(this.shadow.querySelectorAll("my-button"));
 
@@ -89,7 +93,7 @@ class Header extends HTMLElement {
 
     this.shadow.innerHTML = `
     <header>
-      <img class="header__logo" href="/" src="${paw_svg}"/>
+      <img class="header__logo" src="${paw_svg}"/>
       
       <div class="cont__login">
 

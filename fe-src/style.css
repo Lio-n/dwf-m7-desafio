@@ -6,10 +6,8 @@
   font-family: "Poppins", sans-serif;
   letter-spacing: 1px;
 }
-
-html {
-  height: 100vh;
-  overflow-x: hidden;
+::-webkit-scrollbar {
+  display: none;
 }
 
 body {

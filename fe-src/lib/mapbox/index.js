@@ -19,7 +19,7 @@ export const setPetsOnMap = async (mapContainer) => {
   state.subscribe(() => {
     const { lng, lat } = state.getState().currentPosition;
 
-    if (lat != undefined) {
+    if (!!lat) {
       map.flyTo({ center: [lng, lat] });
       currentMarkers.forEach((marker) => marker.remove());
 
@@ -62,7 +62,7 @@ const showAllPets = async (map) => {
 
     // Add markers to the map.
     const marker = new mapboxgl.Marker(el)
-      .setLngLat([pet.last_location_lat, pet.last_location_lng])
+      .setLngLat([pet.last_location_lng, pet.last_location_lat])
       .setPopup(popup)
       .addTo(map);
 
@@ -72,9 +72,9 @@ const showAllPets = async (map) => {
   return mapMarkers;
 };
 
-const showPetsNearby = async (map, lat, lng) => {
+const showPetsNearby = async (map, lng, lat) => {
   const arrPetsNearby = await state.getPetsNearby(lat, lng);
-
+  console.log({ arrPetsNearby });
   // Add markers to the map.
   for (const pet of arrPetsNearby) {
     // Create a DOM element for each marker.
@@ -103,7 +103,7 @@ const showPetsNearby = async (map, lat, lng) => {
 
     // Add markers to the map.
     new mapboxgl.Marker(el)
-      .setLngLat([pet.last_location_lat, pet.last_location_lng])
+      .setLngLat([pet.last_location_lng, pet.last_location_lat])
       .setPopup(popup)
       .addTo(map);
 
