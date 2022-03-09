@@ -13,10 +13,12 @@ const createAccount_icon = require("../../assets/create-account_icon.svg");
 class Menu extends HTMLElement {
   shadow: ShadowRoot;
   template;
+  full_name;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
     this.template = document.createElement("template");
+    this.full_name = state.getState().full_name;
   }
   static get observedAttributes() {
     return ["state"];
@@ -53,7 +55,7 @@ class Menu extends HTMLElement {
       this.template.innerHTML = `
         <div class="menu__avatar">
             <img class="avatar__icon-monster" src="${monster_icon}" />
-            <h2 class="avatar__full_name">Lean</h2>
+            <h2 class="avatar__full_name">${this.full_name}</h2>
             <img class="avatar__icon-arrow-down" src="${arrow_down}" />
         </div>
 
