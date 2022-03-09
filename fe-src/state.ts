@@ -40,6 +40,18 @@ const state = {
     return this.data;
   },
 
+  logoutUser() {
+    localStorage.removeItem("saved-state");
+    state.setState({
+      email: undefined,
+      full_name: undefined,
+      TOKEN: undefined,
+      currentPosition: {
+        lng: undefined,
+        lat: undefined,
+      },
+    });
+  },
   // # Send Report.
   async sendReport(report_data): Promise<boolean> {
     return await (

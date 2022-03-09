@@ -18,7 +18,7 @@ class MisDatos extends HTMLElement {
   connectedCallback() {
     this.render();
   }
-  addListener() {
+  _listeners() {
     const showEye: HTMLImageElement = this.shadow.querySelector(".show__eye");
     const inputsArr: NodeListOf<HTMLInputElement> = this.shadow.querySelectorAll("my-input");
 
@@ -231,7 +231,7 @@ class MisDatos extends HTMLElement {
     </section>`;
 
     this.shadow.appendChild(style);
-    this.addListener();
+    this._listeners();
   }
 }
 

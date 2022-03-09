@@ -12,7 +12,7 @@ class Login extends HTMLElement {
   connectedCallback() {
     this.render();
   }
-  addListener() {
+  _listeners() {
     const checkUser = (): void => {
       const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
 
@@ -83,7 +83,7 @@ class Login extends HTMLElement {
     <section>
       `;
     this.shadow.appendChild(style);
-    this.addListener();
+    this._listeners();
   }
 }
 

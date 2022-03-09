@@ -18,7 +18,7 @@ class Password extends HTMLElement {
   connectedCallback() {
     this.render();
   }
-  addListener() {
+  _listeners() {
     const pswrd_1: HTMLInputElement = this.shadow.querySelector("#pswrd_1");
     const showEye: HTMLImageElement = this.shadow.querySelector(".show__eye");
     const myButton: HTMLButtonElement = this.shadow.querySelector("my-button");
@@ -154,7 +154,7 @@ class Password extends HTMLElement {
     </section>`;
 
     this.shadow.appendChild(style);
-    this.addListener();
+    this._listeners();
   }
 }
 

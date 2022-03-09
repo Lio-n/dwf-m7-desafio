@@ -11,39 +11,24 @@ class Header extends HTMLElement {
   connectedCallback() {
     this.render();
   }
-  addListener() {
+  _listeners() {
     const header__logo: HTMLImageElement = this.shadow.querySelector(".header__logo");
     header__logo.addEventListener("click", () => {
       Router.go("/");
     });
-    const routerBtn = () => {
-      const buttonEl: HTMLButtonElement[] = Array.from(this.shadow.querySelectorAll("my-button"));
-
-      buttonEl.map((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          Router.go("/login");
-        });
-      });
-    };
 
     const isAuth = () => {
-      const myMenuFalse: HTMLElement = this.shadow.getElementById("false");
-      const myMenuTrue: HTMLElement = this.shadow.getElementById("true");
+      const container__menu: HTMLElement = this.shadow.querySelector(".container__menu");
+      const my_menu: HTMLElement = document.createElement("my-menu");
 
       const { TOKEN } = state.getState();
 
-      if (TOKEN) {
-        myMenuFalse.style.display = "none";
-        myMenuTrue.style.display = "flex";
-      } else {
-        myMenuFalse.style.display = "block";
-        myMenuTrue.style.display = "none";
-      }
+      TOKEN ? my_menu.setAttribute("state", "") : my_menu.removeAttribute("state");
+
+      container__menu.appendChild(my_menu);
     };
 
     isAuth();
-    routerBtn();
   }
   render() {
     const style = document.createElement("style");
@@ -51,7 +36,7 @@ class Header extends HTMLElement {
     header {
         width: 100%;
         background-color: #094f6e;
-        padding: 1rem;
+        padding: 1rem 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -63,59 +48,17 @@ class Header extends HTMLElement {
         width: 3rem;
         height: 3rem;
         cursor: pointer;
-    }
-    .header__menu-burger {
-        width: 3rem;
-    }
-    .cont__login {
-        display: flex;
-        justify-content: center;
-        text-align: center;
-    }
-    .login {
-        display: none;
-        justify-content: center;
-        flex-direction: column;
-        position: absolute;
-        top: 260px;
-        padding: 1rem;
-        background-color: #ff00d4;
-        border-radius: 7px;
-        width: 290px;
-    }
-    .login__cont-btn {
-        margin: 0 auto;
-    }
-    .login__close {
-        text-align: end;
-        margin-bottom: .5rem;
     }`;
 
     this.shadow.innerHTML = `
     <header>
       <img class="header__logo" src="${paw_svg}"/>
-      
-      <div class="cont__login">
 
-        <div class="login">
-          <span class="login__close">X</span>
-          <div class="login__cont-btn">
-            <my-button margin="0 0 1.5rem 0" color="blue" backgroundColor="skyblue">Iniciar Sesion</my-button>
-            <my-button backgroundColor="yellow">Crear Cuenta</my-button>
-          </div>
-        </div>
-      
-      </div>
-
-      <div class="container__menu">
-        <my-menu id="false"></my-menu>
-        <my-menu id="true" style="display: none"></my-menu>
-      </div>
-
+      <div class="container__menu"></div>
     </header>
       `;
     this.shadow.appendChild(style);
-    this.addListener();
+    this._listeners();
   }
 }
 

@@ -15,7 +15,7 @@ class Picture extends HTMLElement {
     this.src = this.getAttribute("src") || "";
     this.render();
   }
-  addListener() {
+  _listeners() {
     const addPicture = () => {
       const petPicture: HTMLElement = this.shadow.querySelector(".pet__picture");
       const addPictureImg: HTMLImageElement = petPicture.querySelector(".pet__add-picture");
@@ -153,7 +153,7 @@ class Picture extends HTMLElement {
     </div>`;
 
     this.shadow.appendChild(style);
-    this.addListener();
+    this._listeners();
   }
 }
 

@@ -1,214 +1,165 @@
+import { state } from "../../state";
+import { Router } from "@vaadin/router";
+
+const monster_icon = require("../../assets/monster_icon.svg");
+const arrow_down = require("../../assets/arrow_down.svg");
+const user_icon = require("../../assets/user_icon.svg");
+const dog_icon = require("../../assets/dog_icon.svg");
+const megaphone_icon = require("../../assets/megaphone_icon.svg");
+const signout_icon = require("../../assets/signout_icon.svg");
+const signin_icon = require("../../assets/signin_icon.svg");
+const createAccount_icon = require("../../assets/create-account_icon.svg");
+
 class Menu extends HTMLElement {
   shadow: ShadowRoot;
-  closeURL: string =
-    "https://raw.githubusercontent.com/Lio-n/FM-rock-paper-scissors/f6f07ed2a35bfeb7515f66990d3125efda9fcdda/src/assets/images/icon-close.svg";
-  isAuth: string;
+  template;
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
-    this.isAuth = this.getAttribute("id");
+    this.template = document.createElement("template");
+  }
+  static get observedAttributes() {
+    return ["state"];
   }
   connectedCallback() {
     this.render();
+    this._listeners();
   }
-  addListener() {
-    const enableMenu = () => {
-      const menuBurger = this.shadow.querySelector(".button");
-      const subMenuNav = this.shadow.querySelector(".nav");
-      let menuOpen: boolean = false;
+  _listeners() {
+    const menu__logout = this.shadow.querySelector(".menu__logout");
+    menu__logout.addEventListener("click", (e) => {
+      Router.go("/login");
+      state.logoutUser();
+    });
+  }
+  attributeChangedCallback(name, oldVal, newVal) {}
+  _setTemplate() {
+    this.template.innerHTML = `
+        <div class="menu__avatar">
+            <img class="avatar__icon-monster" src="${monster_icon}" />
+            <img class="avatar__icon-arrow-down" src="${arrow_down}" />
+        </div>
 
-      menuBurger.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (!menuOpen) {
-          menuBurger.classList.add("open");
-          subMenuNav.classList.add("center");
-          menuOpen = true;
-        } else {
-          menuBurger.classList.remove("open");
-          subMenuNav.classList.remove("center");
-          menuOpen = false;
-        }
-      });
-    };
+        <nav class="menu__state">
+            <ul>
+                <li><a href="/login"><img src="${signin_icon}" />Iniciar Secion</a></li>
+                <li><a href="/login"><img src="${createAccount_icon}" />Crear Cuenta</a></li>
+                <li class="menu__logout" style="display: none;"><img src="${signout_icon}" />Cerrar Sesion</li>
+            </ul>
+        </nav>
+        <style>${this._setStyles()}</style>`;
 
-    enableMenu();
+    if (this.hasAttribute("state")) {
+      this.template.innerHTML = `
+        <div class="menu__avatar">
+            <img class="avatar__icon-monster" src="${monster_icon}" />
+            <h2 class="avatar__full_name">Lean</h2>
+            <img class="avatar__icon-arrow-down" src="${arrow_down}" />
+        </div>
+
+        <nav class="menu__state">
+            <ul>
+                <a href="/mis-datos">
+                  <li>
+                      <img src="${user_icon}" />Mis datos
+                  </li>
+                </a>
+                <a href="/mis-mascotas">
+                  <li>
+                      <img src="${dog_icon}" />Mis mascotas
+                  </li>
+                </a>
+                <a href="/reportar">
+                  <li>
+                      <img src="${megaphone_icon}" />Reportar mascota
+                  </li>
+                </a>
+                <li class="menu__logout"><img src="${signout_icon}" />Cerrar Sesion</li>
+            </ul>
+        </nav>
+        <style>${this._setStyles()}</style>`;
+    }
+
+    return this.template;
+  }
+
+  _setStyles() {
+    return `*{margin:0;padding:0;box-sizing: border-box; letter-spacing: 1px; letter-spacing: normal;}
+    li {
+      list-style-type: none;
+    }
+    a, .menu__logout {
+      text-decoration: none;
+      font-weight: 600;
+      color: #292643;
+    }
+    img {
+      width: 24px;
+      height: 24px;
+      vertical-align: text-top;
+    }
+    .menu__logout:hover {
+      color: #fff;
+    }
+    .menu__avatar {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      cursor: pointer;
+    }
+    .menu__state img {
+      margin-right: .5rem;
+    }
+    
+    .menu__avatar:hover + .menu__state {
+      display: initial;
+    }
+    .avatar__icon-monster {
+      width: 2rem;
+      height: 2rem;
+    }
+    .avatar__full_name {
+      color: #04b471;
+    }
+    .avatar__icon-arrow-down {
+      width: 1.5rem;
+    }
+    
+    .menu__state {
+      position: absolute;
+      background-color: #2d7a9c;
+      border-radius: 5px;
+      display: none;
+      top: 70%;
+      right: 0;
+      margin-right: 2rem;
+      box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+    }
+    li {
+      padding: 1rem;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+    }
+    li:nth-child(1) {
+      border-radius: 5px 5px 0 0;
+    }
+    li:nth-child(4) {
+      border-radius: 0 0 5px 5px;
+    }
+    li:hover {
+      background-color: #00c897;
+    }
+    li:hover a {
+      color: #fff;
+    }
+
+    .menu__state:hover {
+      display: initial;
+    }
+  `;
   }
   render() {
-    const style = document.createElement("style");
-    style.innerHTML = `* {box-sizing: border-box;margin: 0;padding: 0;}
-    .home__menu-items {
-      display: flex;
-      font-size: 20px;
-      list-style: none;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    .home__item {
-      border-radius: 5px;
-      transition: all 0.5s ease-in-out;
-      width: max-content;
-    }
-    .home__item > a:hover {
-      color: #094f6e;
-    }
-    .home__item:hover {
-      background-color: #dadfea;
-    }
-    .home__item > a {
-      color: #fff;
-      display: none;
-      text-decoration: none;
-      padding: 10px;
-    }
-    @media (min-width: 768px) {
-      .home__item > a {
-        display: inherit;
-        height: 100%;
-      }
-      .button {
-          display: none;
-      }
-    }
-    .home__item:nth-child(2) {
-      margin: 0 20px;
-    }
-    
-    /*<!--Menu-Burger-->*/
-    .button {
-      position: relative;
-      flex-direction: column;
-      align-self: center;
-      width: 2rem;
-      cursor: pointer;
-      transition: all 0.5s ease-in-out;
-    }
-    
-    .button__burger,
-    .button__burger::before,
-    .button__burger::after {
-      width: 100%;
-      height: 5px;
-      background-color: #fff;
-      border-radius: 5px;
-      transition: all 0.5s ease-in-out;
-    }
-    .button__burger::before,
-    .button__burger::after {
-      content: "";
-      position: absolute;
-    }
-    .button__burger::before {
-      transform: translateY(-10px);
-    }
-    .button__burger::after {
-      transform: translateY(10px);
-    }
-    
-    /* Magic */
-    .button.open .button__burger {
-      transform: translateX(-50px);
-      background: transparent;
-    }
-    
-    .button.open .button__burger::before {
-      transform: rotate(45deg) translate(35px, -35px);
-    }
-    .button.open .button__burger::after {
-      transform: rotate(-45deg) translate(35px, 35px);
-    }
-    
-    /*<!--Sub-Menu-->*/
-    .nav {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      flex-direction: column;
-      font-size: 40px;
-      margin-top: 5rem;
-      opacity: 0.9;
-      top: 0;
-      left: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      visibility: hidden;
-      transform: translateX(-414px);
-      transition: all 0.5s ease-in-out;
-    }
-    .nav.center {
-      transform: translateX(0px);
-      visibility: inherit;
-      background-color: hsla(198,85%,23%,.9);
-    }
-    .nav.center .nav__item {
-      display: inherit;
-      margin-top: 1.5rem;
-      text-align: center;
-    }
-
-    @media (min-width: 768px) {
-      .nav.center {
-        display: none;
-      }
-    }
-    .nav > a:nth-child(2) {
-      margin: 20px 0;
-    }
-    .nav > a {
-      text-shadow: 1px 1px 4px #022534;
-      color: #fff;
-      text-decoration: none;
-      cursor: pointer;
-    }`;
-
-    if (this.isAuth == "true") {
-      this.shadow.innerHTML = `
-        <!--Menu-Burger-->
-        <ul class="cont-nav-menu">
-            <div class="home__menu-items">
-                <li class="home__item"><a href="/mis-datos">Mis datos</a></li>
-                <li class="home__item"><a href="/mis-mascotas">Mis mascotas reportadas</a></li>
-                <li class="home__item"><a href="/reportar">Reportar mascota</a></li>
-                <li class="home__item" style="margin-left: 20px;"><a href="/">Inicio</a></li>
-            </div>
-        </ul>
-
-        <div class="button center">
-            <div class="button__burger"></div>
-        </div>
-
-        <!--Sub-Menu-->
-        <div class="nav">
-            <a class="nav__item" href="/">Inicio</a>
-            <a class="nav__item" href="/mis-datos">Mis datos</a>
-            <a class="nav__item" href="/mis-mascotas">Mis mascotas reportadas</a>
-            <a class="nav__item" href="/reportar">Reportar mascota</a>
-        </div>`;
-    } else {
-      this.shadow.innerHTML = `
-        <!--Menu-Burger-->
-        <ul class="cont-nav-menu">
-            <div class="home__menu-items">
-                <li class="home__item"><a href="/login">Iniciar Sesion</a></li>
-                <li class="home__item"><a href="/login">Crear Cuenta</a></li>
-                <li class="home__item"><a href="/">Inicio</a></li>
-            </div>
-        </ul>
-
-        <div class="button center">
-            <div class="button__burger"></div>
-        </div>
-
-        <!--Sub-Menu-->
-        <div class="nav">
-            <a class="nav__item" href="/">Inicio</a>
-            <a class="nav__item" href="/login">Iniciar Sesion</a>
-            <a class="nav__item" href="/login">Crear Cuenta</a>
-        </div>`;
-    }
-
-    this.shadow.appendChild(style);
-    this.addListener();
+    this.shadow.appendChild(this._setTemplate().content.cloneNode(true));
   }
 }
 

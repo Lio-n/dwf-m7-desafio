@@ -24,9 +24,9 @@ class Report extends HTMLElement {
 
     state.setState({ ...state.getState(), pet: pet_default });
     this.render();
-    this.addListener();
+    this._listeners();
   }
-  addListener() {
+  _listeners() {
     const cancelReport = () => {
       const btnCancel: HTMLButtonElement = this.shadow.querySelector(".button__cancel-report");
 
