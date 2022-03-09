@@ -149,7 +149,7 @@ class Menu extends HTMLElement {
     li:hover {
       background-color: #00c897;
     }
-    li:hover a {
+    a:hover {
       color: #fff;
     }
 
