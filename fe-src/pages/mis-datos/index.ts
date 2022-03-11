@@ -76,7 +76,6 @@ class MisDatos extends HTMLElement {
           alert__updated.style.display = "block";
 
           state.updateUser(user_data.pswrd_1);
-          // Router.go("/");
         } else {
           const alert__wait: HTMLElement = this.shadow.querySelector(".alert__wait");
           alert__wait.style.display = "block";

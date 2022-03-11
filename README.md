@@ -1,5 +1,11 @@
 # Challenge
 
+## **Webapp** : https://dwf-m7-looking-for-my-friend.herokuapp.com/
+
+## **API documentation** : https://documenter.getpostman.com/view/17951846/UVsEV965
+
+---
+
 ## Table of contents
 
 - [Overview](#overview)
@@ -12,11 +18,11 @@
 
 ### The challenge
 
-- Create a website where you can publish a lost pet report with different data about the pet and its geographic location. For this we will use a front/back architecture, where the back will be exposed to an API that will use Postgre as a database. Use this [design](https://www.figma.com/file/jlBz7p7s1a2NyKUmwIY1jT/dwf-m7-desaf%C3%ADo?node-id=0%3A1) as a reference.
+- Create a website where you can publish a lost pet report with different data about the pet and its geographic location. For this we will use a front/back architecture, where the back will be exposed to an API that will use Postgre as a database. Use this **[design](https://www.figma.com/file/jlBz7p7s1a2NyKUmwIY1jT/dwf-m7-desaf%C3%ADo?node-id=0%3A1)** as a reference.
 
-- Have a documented API with Postman and with the link to the documentation in the Readme.md. [API documentation](https://documenter.getpostman.com/view/17951846/UVsEV965).
+- Have a documented API with Postman and with the link to the documentation in the Readme.md. **[API documentation](https://documenter.getpostman.com/view/17951846/UVsEV965)**.
 
-- Upload the application to Heroku and add the link in the Readme.md. [Link Webapp](https://dwf-m7-looking-for-my-friend.herokuapp.com/)
+- Upload the application to Heroku and add the link in the Readme.md. **[Link Webapp](https://dwf-m7-looking-for-my-friend.herokuapp.com/)**
 
 ## My process
 
