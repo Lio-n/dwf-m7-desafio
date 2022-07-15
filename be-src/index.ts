@@ -33,14 +33,15 @@ import { setReport } from "./controllers/reports-controller";
 
 import * as express from "express";
 import * as cors from "cors";
+import * as compress from "compression";
 
 const app = express();
 
 app.use(cors());
+app.use(compress());
 app.use(express.json({ limit: "75mb" }));
 app.use(express.static("fe-dist"));
-
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 // ## ヾ(●ω●)ノ ##
 
@@ -89,7 +90,7 @@ app.get("/pet", async (req, res) => {
   try {
     const allPets: object[] = await getAllPets();
 
-    res.status(201).json(allPets);
+    res.status(200).json(allPets);
   } catch (err) {
     res.status(400).json(err);
   }
