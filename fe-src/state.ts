@@ -128,8 +128,7 @@ const state = {
       })
     ).json();
 
-    if (res.isToken)
-      this.setState({ ...this.getState(), TOKEN: res.isToken, full_name: res.full_name });
+    if (res.isToken) this.setState({ ...this.getState(), TOKEN: res.isToken, full_name: res.full_name });
     return res.isToken;
   },
 

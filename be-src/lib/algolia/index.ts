@@ -1,6 +1,6 @@
 import algoliasearch from "algoliasearch";
 
-const client = algoliasearch("4KTHPQCCNZ", process.env.ALGOLIA_ADMIN_KEY);
+const client = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_ADMIN_KEY);
 const pets_index = client.initIndex("pets");
 
 export const algoliaSet = (petId: any, lat: any, lng: any): void => {

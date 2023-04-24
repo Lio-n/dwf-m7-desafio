@@ -2,32 +2,12 @@ import "dotenv/config";
 
 import * as path from "path";
 // # Middleware
-import {
-  userMiddleware,
-  authMiddleware,
-  tokenMiddleware,
-  petMiddleware,
-  reportMiddleware,
-} from "./models/middleware";
+import { userMiddleware, authMiddleware, tokenMiddleware, petMiddleware, reportMiddleware } from "./models/middleware";
 
 // # Controllers
-import {
-  existsUser,
-  createUser,
-  updateUser,
-  getUserFullname,
-  getUserEmail,
-} from "./controllers/users-controller";
+import { existsUser, createUser, updateUser, getUserFullname, getUserEmail } from "./controllers/users-controller";
 import { authUser } from "./controllers/auth-controller";
-import {
-  publishPet,
-  getUserPets,
-  getOnePet,
-  updatePet,
-  getAllPets,
-  deletePet,
-  getPetsNearby,
-} from "./controllers/pets-controller";
+import { publishPet, getUserPets, getOnePet, updatePet, getAllPets, deletePet, getPetsNearby } from "./controllers/pets-controller";
 
 import { setReport } from "./controllers/reports-controller";
 
@@ -37,8 +17,8 @@ import * as compress from "compression";
 
 const app = express();
 
-app.use(cors());
 app.use(compress());
+app.use(cors());
 app.use(express.json({ limit: "75mb" }));
 app.use(express.static("fe-dist"));
 const port = process.env.PORT || 3001;

@@ -1,22 +1,14 @@
 import { Sequelize } from "sequelize";
 
-const { HEROKU_USERNAME, HEROKU_PASSWORD, HEROKU_DATABASE, HEROKU_HOST } = process.env;
+const { DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST, DB_DIALECT, DB_PORT } = process.env;
 
 export const sequelize = new Sequelize({
-  dialect: "postgres",
-  username: HEROKU_USERNAME,
-  password: HEROKU_PASSWORD,
-  database: HEROKU_DATABASE,
-  port: 5432,
-  host: HEROKU_HOST,
-  ssl: true,
-  // * esto es necesario para que corra correctamente
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
+  username: DB_USERNAME as any,
+  password: DB_PASSWORD as any,
+  database: DB_DATABASE as any,
+  host: DB_HOST as any,
+  dialect: DB_DIALECT as any,
+  port: +DB_PORT as any,
 });
 
 sequelize.authenticate();
